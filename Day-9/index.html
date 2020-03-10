@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h4 >Menu User</h4>
+    <ul style="list-style-type:square;" id="1" >
+    </ul>
+    <input type="text" placeholder="Buah yang mana ?">
+    <button>Beli</button>
+</body>
+<script>
+    let arrItems = [
+      {
+        produk: "Jeruk",
+        harga: 10000,
+        stock: 10,
+        qty: 0
+      },
+      {
+        produk: "Mangga",
+        harga: 15000,
+        stock: 10,
+        qty: 0
+      },
+      {
+        produk: "Apel",
+        harga: 5000,
+        stock: 10,
+        qty: 0
+      }
+    ];
+
+  arrItems.forEach(({produk, harga, stock}, idx)=>{
+      document.getElementById('1').innerHTML+=`<br>${idx+1}. <strong>  ${produk} </strong> IDR ${harga} JUMLAH  ${stock} `
+  })
+</script>
+
+</html>

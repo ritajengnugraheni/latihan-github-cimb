@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    table, tr, td, th {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    </style>
+    <table id="1">
+        <tr >
+            <th style="color: blueviolet">  No  </th>
+            <th>  Buah  </th>
+            <th>  Harga  </th>
+        </tr>
+    </table>
+    <br>
+    <input type="text" placeholder="Buah yang mana ?">
+    <button>Beli</button>
+</body>
+<script>
+        let arrItems = [
+      {
+        produk: "Jeruk",
+        harga: 10000,
+        stock: 10,
+        qty: 0
+      },
+      {
+        produk: "Mangga",
+        harga: 15000,
+        stock: 10,
+        qty: 0
+      },
+      {
+        produk: "Apel",
+        harga: 5000,
+        stock: 10,
+        qty: 0
+      }
+    ];
+
+  arrItems.forEach(({produk, harga, stock}, idx)=>{
+      document.getElementById('1').innerHTML+=`<tr> <td> ${idx+1} </td> <td> ${produk} </td> <td> ${harga} </td> </tr>`
+  })
+</script>
+</html>

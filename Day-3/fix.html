@@ -1,0 +1,127 @@
+<!-- 
+Lanjutkan yang kemarin ()
+Barang dan stock masih fix kali ini ()
+Kasih user kesempatan untuk ngulangin inputnya bukan yang kaya kemarin
+Dan kalo dia kurang bayarnya kasih dia kesempatan untuk ngulangin lagi
+Kalo mau menerapkan dia bayar kurangnya trs lunas itu bagus
+Trs tawarin user mau belanja lagi atau ga, kalo iya stock yang di awal berkurang
+ -->
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    
+</body>
+
+<script>
+    // Stok buah
+let stokmangga = 5
+let stokjeruk = 5
+let stokapel = 5
+let stokmanggis = 5
+    //Harga buah
+let hargamangga=1000
+let hargajeruk = 2000
+let hargaapel = 3000
+let hargamanggis = 4000
+
+do {
+alert("Daftar Harga Buah \n1. Buah Mangga -> Rp.1000 \n2. Buah Jeruk -> Rp. 2000 \n3. Buah Apel -> Rp. 3000 \n4. Buah Manggis -> Rp. 4000")
+     //Kondisi buah
+var kondisimangga=true
+do {
+    var inputmangga = prompt(" Masukan jumlah mangga \n Jumlah mangga saat ini :  " +stokmangga)
+    if (inputmangga>stokmangga){  // &&inputmangga <0 atau typeof 
+        alert('Maaf stok mangga tidak mencukupi')
+        kondisimangga=true
+    } else
+    {
+        alert('Mangga yang dibeli ' + inputmangga)
+        kondisimangga=false
+    }
+} while (kondisimangga) 
+stokmangga = stokmangga - inputmangga
+
+var kondisijeruk = true
+do {
+    var inputjeruk = prompt("Masukkan jumlah buah jeruk  \n Jumlah jeruk saat ini : " +stokjeruk)
+    if (inputjeruk>stokjeruk){
+        alert('Maaf stok jeruk tidak mencukupi')
+        kondisijeruk=true
+    } else 
+    {
+        alert('Jeruk yang dibeli ' + inputjeruk)
+        kondisijeruk=false
+    }
+} while (kondisijeruk) 
+stokjeruk = stokjeruk - inputjeruk
+
+var kondisiapel=true
+do {
+    var inputapel = prompt("Masukkan jumlah buah apel \n Jumlah apel saat ini : " +stokapel)
+    if (inputapel>stokapel){
+        alert('Maaf stok apel tidak mencukupi')
+        kondisiapel=true
+    } else
+    {
+        alert('Apel yang anda beli ' + inputapel)
+        kondisiapel=false
+    }
+} while (kondisiapel)
+stokapel = stokapel - inputapel
+
+var kondisimanggis=true
+do {
+    var inputmanggis = prompt("Masukkan jumlah buah manggis  \n Jumlah manggis saat ini " +stokmanggis)
+    if (inputmanggis>stokmanggis){
+        alert('Maaf stok manggis tidak mencukupi')
+        kondisimanggis=true
+    } else
+    {
+        alert('Manggis yang anda beli '+ inputmanggis)
+        kondisimanggis=false
+    }
+} while (kondisimanggis)
+stokmanggis = stokmanggis - inputmanggis
+
+    // Pembayaran
+    var totalharga = (hargamangga*inputmangga) + (hargaapel*inputapel) + (hargajeruk*inputjeruk) + (hargamanggis*inputmanggis)
+    alert("Harga total belanja anda : Rp." + totalharga)
+
+    var bayar = parseInt(prompt("Masukkan jumlah uang anda : \n (Dalam Rupiah)"))
+    var hasil = totalharga-bayar
+
+    while (bayar < totalharga) {      
+        alert("Uang anda kurang : Rp." + hasil)
+        bayar = parseInt(prompt("Masukkan uang pembayaran kembali"))
+
+    } 
+    var hasilkembalian = bayar - totalharga
+    if ( bayar == totalharga) {
+        alert("Uang anda pas")
+        
+    } else if ( bayar > totalharga) {
+        alert("Uang anda kembalian Rp. " + hasilkembalian)
+    }
+
+    //Konfirmasi oke and cancel
+    var confirmation = confirm("Apakah lanjut belanja?")
+    confirmation = true
+    alert('stok mangga sisa ' +stokmangga + '\nstok jeruk sisa '+ stokjeruk +'\nstok apel sisa ' +stokapel + '\nstok manggis sisa' + stokmanggis)
+    if (stokmangga == 0 && stokmanggis == 0 && stokapel == 0 && stokjeruk == 0){
+        alert('Maaf sudah habis')
+        confirmation = false
+    }
+
+}while(confirmation)
+
+alert("Terimakasih telah berbelanja ")
+</script>
+</html>

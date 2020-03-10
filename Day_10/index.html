@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        table,
+        tr,
+        td,
+        th {
+            border: 3px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+            text-align: center
+        }
+    </style>
+    <center>
+        <!-- <h1 id= 'tampil'></h1> -->
+        <h2>Daftar Kelas Hamtaro</h2>
+        <table>
+            <thead>
+                <!-- <tr style="font: bold">Kelas Biji Bunga Matahari</tr> -->
+                <tr>
+                    <th onclick="sortTable(0)">Nama</th>
+                    <th>Pekerjaan</th>
+                    <th onclick="sortTable(2)">Umur</th>
+                    <th>Gambar</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+            <tbody id="mainData"></tbody>
+
+            <tfoot>
+                <tr>
+                    <td> <input id="InputNama" type="text" placeholder="Nama orang" required></td>
+                    <td><input id="InputPekerjaan" type="text" placeholder="Pekerjaan" required></td>
+                    <td><input id="InputUmur" type="number" placeholder="Umur" required></td>
+                    <td><input id="InputGambar" type="text" placeholder="Input Gambar Link" required></td>
+                    <td><input id="SubmitData" type="Submit" value="Submit" onclick="addData()"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <h3 id="dataKosong"></h3>
+    </center>
+
+
+
+</body>
+<script>
+
+    // Class data 
+    class Orang {
+        constructor(nama, pekerjaan, umur, gambar) {
+            this.nama = nama
+            this.pekerjaan = pekerjaan
+            this.umur = umur
+            this.gambar = gambar
+        }
+
+    }
+    // Isi data
+    let dataOrang = [
+        new Orang('Rita', 'designer', 22, 'https://vignette.wikia.nocookie.net/hamtaro/images/1/1d/HamtaroN.png/revision/latest?cb=20150928215408'),
+        new Orang('Ajeng', 'programmer', 21, 'https://i.ya-webdesign.com/images/hamtaro-transparent-10.png'),
+        new Orang('Nugraheni', 'designer', 22, 'https://vignette.wikia.nocookie.net/hamtaro/images/1/1d/HamtaroN.png/revision/latest?cb=20150928215408')
+    ]
+    let isUlang;
+
+    // Menampilkan data 
+    const readerData = () => {
+        let hasil = ''
+        dataOrang.forEach(({ nama, pekerjaan, umur, gambar }, index) => {
+            hasil += `
+            <tr>
+                <td>${nama}</td>
+                <td>${pekerjaan}</td>
+                <td>${umur}</td>
+                <td> <img src=${gambar} width= '100px'> </td>
+                <td> <input id ='deleteIndex' type='button' value ='Delete' onclick='deleteData(${index})'> </td>
+        </tr>`
+        })
+        document.getElementById('mainData').innerHTML = hasil
+    }
+    readerData()
+
+    // Menambahkan data 
+    const addData = () => {
+
+        let InputNama = document.getElementById("InputNama").value
+        let InputPekerjaan = document.getElementById('InputPekerjaan').value
+        let InputUmur = document.getElementById('InputUmur').value
+        let InputGambar = document.getElementById('InputGambar').value
+        let newData = new Orang(InputNama, InputPekerjaan, InputUmur, InputGambar)
+
+
+        if (InputNama == false || InputPekerjaan == false || InputUmur == false || InputGambar == false) {
+            alert('Maaf silahkan ulang masih ada yang kosong')
+
+        } else {
+            dataOrang.push(newData)
+            readerData()
+            alert('Berhasil ditambahkan')
+            document.getElementById("dataKosong").innerHTML = ''
+            InputNama = document.getElementById("InputNama").value = ''
+            InputPekerjaan = document.getElementById('InputPekerjaan').value = ''
+            InputUmur = document.getElementById('InputUmur').value = ''
+            InputGambar = document.getElementById('InputGambar').value = ''
+
+        }
+
+
+    }
+
+
+
+
+    // Delete Data
+    const deleteData = (deleteIndex) => {
+        dataOrang.splice(deleteIndex, 1)
+        readerData()
+        alert('Berhasil Hapus Data')
+        if (dataOrang == '') {
+            alert('Data sudah kosong')
+            document.getElementById('dataKosong').innerHTML = ' <center>Data sudah kosong </center>'
+        } else {
+            document.getElementById('dataKosong').innerHTML = ''
+        }
+    }
+
+    //Sort tabel
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mainData");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 0; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+
+
+
+</script>
+
+</html>

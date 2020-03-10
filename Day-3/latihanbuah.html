@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+    var stockmangga =5
+    var kondisimangga=true
+    do{
+        let inputmangga =prompt('input mangga')
+        if(inputmangga > stockmangga){
+            alert('kurang stock')
+        }
+        else {
+            alert('anda membeli'+inputmangga)
+            kondisimangga=false
+        }
+    }while(kondisimangga=false)
+    // stockmangga-=inputmangga
+
+    var stockapel =5
+    var kondisiapel=true
+    while(kondisiapel){
+        let inputapel =prompt('input apel')
+        if(inputapel > stockapel){
+            alert('kurang stock')
+        }
+        else {
+            alert('anda membeli '+inputapel)
+            kondisiapel=false
+        }
+    }
+    // stockapel-=inputapel
+
+    var stockmanggis =5
+    let kondisimanggis=true
+    while(kondisimanggis){
+        let inputmanggis =prompt('input manggis')
+        if(inputmanggis > stockmanggis){
+            alert('kurang stock')
+        }
+        else {
+            alert('anda membeli'+inputmanggis)
+            kondisimanggis=false
+        }
+    }
+    stockmanggis-=inputmanggis
+
+    var stockjeruk = 5
+    let kondisijeruk=true
+    while(kondisijeruk){
+        let inputjeruk =prompt('input jeruk')
+        if(inputjeruk > stockjeruk){
+            alert('kurang stock')
+        }
+        else {
+            alert('anda membeli' + inputmanggis)
+            kondisijeruk=false 
+            kondisisemua=true
+        }
+    }
+    stockjeruk-=inputjeruk
+  
+    
+    // let kondisiharga=true
+    let harga =(1000*inputapel)+(2000*inputjeruk)+(3000*inputmangga)+(4000*inputmanggis)
+    alert(harga)
+    // while(kondisiharga){
+    // let bayar = prompt('Berapa uang yang dibayarkan')
+    
+    //         if (bayar == harga){
+    //             alert('uang anda pass')
+    //             kondisiharga=false
+    //             confirm('apakah anda ingin membeli lagi?')
+    //             } else if (bayar > harga){
+    //                 let kembalian = bayar - harga
+    //                 alert('Uang anda kembalian Rp. '+ kembalian)
+    //                 kondisiharga=false
+    //                 confirm('apakah anda ingin membeli lagi')
+    //             } else {
+    //                 let kurang = harga - bayar
+    //                  alert('Uang kurang Rp.')
+    //             }
+    //         }
+    </script>
+</body>
+</html>

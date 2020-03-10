@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let tinggi = 'Inputkan Tinggi Badan Dalam Meter'
+        let input1 = parseFloat(prompt(tinggi))
+
+        let berat = 'input Berat Badan Dalam Kg'
+        let input2 = parseFloat(prompt(berat))
+
+        let hasil = parseFloat(input2 / (input1**2))
+        // alert(hasil)
+
+        if (hasil > 40){
+            alert ('obesitas ' + hasil)
+        }else if (hasil >= 30){
+            alert('BB sangat berlebih ' + hasil)
+        } else if (hasil >= 20){
+            alert('BB Berlebih ' + hasil)
+        } else if (hasil >= 18.5) {
+            alert('BB kurang ' + hasil)
+        }else {
+            alert('BB kurang ' + hasil)
+        }
+
+
+    </script>
+</body>
+</html>

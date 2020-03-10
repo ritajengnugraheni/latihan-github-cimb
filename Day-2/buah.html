@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   
+    <textarea name="" id="" cols="30" rows="10">
+        Jumlah mangga = 5
+        Jumlah apel = 5
+        Jumlah Jeruk = 5
+        Jumlah manggis = 5
+    </textarea>
+    <script>
+        let a = 'Berapa mangga yang ingin dibeli?'
+        let input1 = prompt(a) 
+        let harga1 = 2000
+        if (input1 > 5)
+        {
+            alert('Maaf stock mangga habis')
+        } else 
+        {
+            let b = 'Berapa apel yang ingin kamu beli?'
+            let input2 = prompt(b)
+            let harga2 = 3000
+            if (input2>5) 
+            {
+                alert('Maaf stock apel habis')
+            } else
+            {
+                let c = 'Berapa jeruk yang ingin kamu beli?'
+                let input3 = prompt(c)
+                let harga3 = 4000 
+                 if (input3 > 5)
+                 {
+                    alert('Maaf stock jeruk habis')
+                 } else {
+                    let d = 'Berapa manggis yang ingin kamu beli?'
+                    let input4 = prompt(d)
+                    let harga4 = 5000
+                    if (input4 >5){
+                        alert('Maaf stock manggis habis')
+                    } else {
+                        let total = (harga1*input1)+(harga2*input2) +(harga3*input3) +(harga4*input4)
+                        alert (total)
+                        let e = 'Berapa uang yang dibayarkan'
+                        let input5= prompt(e)
+
+                        if (input5 == total){
+                            alert('uang anda pass')
+                        } else if (input5 > total){
+                            let kembalian = input5 - total
+                            alert('Uang anda kembalian Rp. '+ kembalian)
+                        } else {
+                            let kurang = total - input5
+                            alert('Uang kurang Rp.')
+                        }
+                    }
+                 }
+                 
+            }
+
+        }   
+  
+//PBSDS1109 0209
+
+    
+
+    </script>
+</body>
+</html>

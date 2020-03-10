@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // Array
+    let arritembuah = ['Mangga', 'Jeruk', 'Apel']
+    let arritemharga = [1000, 2000, 3000]
+    let arritemstok = [10, 5, 15]
+    let arrinput = [0, 0, 0]
+    var kalimat = ''
+    
+    var kondisibuah
+   
+
+    //Tampilan menu prompt utama 
+
+    for (let i = 0; i < arritembuah.length; i++) {
+        kalimat += arritembuah[i] + ' Buah itu seharga : ' + arritemharga[i] + ' Dengan stok : ' + arritemstok[i] + '\n'
+
+    }
+    alert(kalimat)
+    var kondisi = true
+    var kondisimenu=true
+    //=== END PROGRAM ===
+    do {
+        //do menu 
+        arrinput[0]=0
+        do{
+        var menu = prompt('Menu \n 1. Beli mangga stok saat ini :' + arritemstok[0] + '\n 2. Beli jeruk stok saat ini : '+arritemstok[1]+'\n 3. Beli apel stok saat ini :  '+arritemstok[2]+'\n 4. Hitung \n Masukan pilihan menu :')
+
+        if (menu == 1) {
+            var jumlahmangga
+            
+            jumlahmangga = parseInt(prompt('Beli mangga berapa'))
+            if (jumlahmangga > arritemstok[0]) {
+                alert('Maaf stok mangga tidak mencukupi')
+            } else {
+                
+                alert('Mangga yang anda beli ada :' + jumlahmangga)
+                kondisi = false
+                arrinput[0] +=jumlahmangga
+            }
+            // arrinput[i]=0
+            // for (var i=0; i< 1; i++){
+                
+            //     jumlahmangga = parseInt(prompt('Beli mangga berapa')) 
+            //     if (jumlahmangga > arritemstok[i]) {
+            //         alert('Maaf stok mangga tidak mencukupi')
+            //     } else {
+            //         alert('Mangga yang anda beli ada :' + jumlahmangga)
+            //         kondisi = false
+            //         arrinput[i] +=jumlahmangga
+            //     }
+            // }
+        
+        } else if (menu == 2) {
+            var jumlahjeruk
+            arrinput[1]=0
+            jumlahjeruk = parseInt(prompt('Beli jeruk berapa'))
+            if (jumlahjeruk > arritemstok[1]) {
+                alert('Maaf stok jeruk tidak mencukupi')
+            } else {
+                alert('Jeruk yang anda beli ada :' + jumlahjeruk)
+                kondisi = false
+                arrinput[1] += jumlahjeruk
+            }
+        } else if (menu == 3) {
+            var jumlahapel
+            arrinput[2]=0
+            jumlahapel = parseInt(prompt('Beli apel berapa'))
+            if (jumlahapel > arritemstok[2]) {
+                alert('Maaf stok apel tidak mencukupi')
+            } else {
+                alert('Jeruk yang anda beli ada : ' + jumlahapel)
+                kondisi = false
+                arrinput[2] +=jumlahapel
+            }
+        } else if (menu == 4) {
+            var harga = 0
+            alert(arrinput)
+            for (var j = 0; j < arritemstok.length; j++) {
+                harga += arrinput[j] * arritemharga[j]
+
+            }
+            alert('Harga total : ' + harga)
+
+            var bayar =prompt('Berapa uang anda?')
+            
+
+            while (bayar < harga ){
+                var hasil = harga - bayar
+                alert('Uang anda kurang'+ hasil)
+                bayar = prompt('Inputkan uang kembali')
+            }
+
+            var kembalian = bayar-harga
+            if (harga == bayar){
+                alert('Uang anda pass')
+            } else 
+            { 
+                alert('uang anda kembalian : Rp.' + kembalian)
+            }
+
+
+            // kondisi=true
+            // confirm('Apakah anda ingin belanja kembali? ')
+          
+            arritemstok[0]-= arrinput[0]
+            arritemstok[1]-= arrinput[1]
+            arritemstok[2]-= arrinput[2]
+            // alert('Kondisi saat ini \n 1. Beli mangga stok saat ini :' + arritemstok[0] + '\n 2. Beli jeruk stok saat ini : '+arritemstok[1]+'\n 3. Beli apel stok saat ini :  '+arritemstok[2])
+            // for(var b=0; b<arritemstok.length; b++){
+            //     if(arritemstok[b]==0){
+            //         alert('Maaf kami sudah tidak ada persediaan')
+            //         kondisi=true
+            //     }
+            // }
+            kondisimenu=false
+        } 
+      
+        else {
+            alert('Maaf menu yang anda inputkan tidak tersedia')
+        }
+        // arrinput[0]=0
+        kondisimenu=true
+    }while(kondisimenu)   
+        kondisi = true
+        // arrinput[0]=0
+        // confirm('Mau and aja ?')  
+    } while (kondisi)
+
+
+
+</script>
+
+</html>

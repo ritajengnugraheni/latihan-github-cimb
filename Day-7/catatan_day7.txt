@@ -1,0 +1,53 @@
+==== contoh function yang tidak return sebuah value ====
+let c 
+function ubahC (){
+    c=3
+}
+ubahC()
+
+==== Contoh yang menggunakan return ====
+function pakeReturn(index){
+    return index +1
+}
+console.log(pakeReturn(1))
+
+function tambahItem(buah, harga, stok){
+    newItem{
+        buah,
+        harga,
+        stok,
+        qty(0)
+    }
+}
+** Cara memanggil function tambahItem
+newItemBuah = prompt('Masukan nama item')
+newItemHarga= prompt('Masukan harga item')
+newItemStok= prompt('Masukan banyaknya stok')
+
+tambahItem(newItemBuah,newItemHarga,newItemStok)
+arrItem.push(newItem)
+
+===== Method yang akan sering digunakan pada array =====
+Slice 
+Splice 
+Map
+Filter
+indexOr
+sort
+
+===== Tugas PR =====
+Sama kayak kemarin ada admin (add item dan del item, exit ) ada user (beli apa aja, keranjang, checkout)
+user role :
+1. Pilihan yang akan dibeli ada (clothing, HP, Buah)
+   * clothing ada property baru namanya size (S, M, L) inputkan 1, 2, 3
+   * HP ada property Garansi (true atau false) tampilkan hp ini ga ada garansinya loh yakin beli ?
+   * buah ada property exp date (DD MM YYYY) jika sudah exp date maka tampilkan "Buah sudah kadaluarsa" pakai new Date () get date mm sama yyyy
+    admin bisa input exp bisa sebelum hari ini 
+
+* semua menggunakan ketik nama 
+1. membuat beberapa item buah, baju, elektronik 
+2. mau buah apa apel etc, baju kaos etc, elektronik handphone etc 
+3. mau apel apa stc, mau kaos ukuran berapa? etc, elektronik handphone merk apa? etc 
+====================
+
+input 1 2 3 output 3 2 1

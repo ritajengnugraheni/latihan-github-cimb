@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   
+    <!-- <textarea name="" id="" cols="30" rows="10">
+        Jumlah mangga = 5
+        Jumlah apel = 5
+        Jumlah Jeruk = 5
+        Jumlah manggis = 5 -->
+    <!-- </textarea> -->
+    <script>
+
+        //========= Declaration condition for looping =======
+        let kondisibuah=true
+       
+       
+        //========= Declaration stock fruit =========
+        let stokmangga = 5
+        let stokapel = 5
+        let stokjeruk=5
+        let stokmanggis = 5
+
+        //========= Declaration price fruit ========
+        let hargamangga = 2000
+        let hargaapel = 3000
+        let hargajeruk = 4000
+        let hargamanggis = 5000
+
+        
+        while(kondisibuah){
+        let inputmangga = prompt('Berapa mangga yang ingin dibeli?')
+        if (inputmangga>stokmangga){
+            alert('Maaf stok mangga habis')
+            kondisibuah = true
+        }
+        else 
+        {   
+            stokmangga-=inputmangga
+            alert ('Mangga saat ini tersisa : '+stokmangga)
+            let inputapel = prompt('Berapa apel yang ingin dibeli?')
+            if (inputapel>stokapel){
+                alert('Maaf stok apel habis')
+                kondisibuah = true
+            }
+            else 
+            {   
+                stokapel-=inputapel
+                alert('Apel saat ini tersisa : '+stokapel)
+                let inputjeruk = prompt('Berapa jeruk yang ingin dibeli?')
+                if(inputjeruk>stokjeruk){
+                    alert('Maaf stok jeruk habis')
+                    kondisibuah = true
+                }
+                else
+                {   
+                    stokjeruk-=inputjeruk
+                    alert('Jeruk saat ini tersisa : ' + stokjeruk)
+                    let inputmanggis = prompt('Berapa manggis yang ingin dibeli?')
+                    if (inputmanggis>stokmanggis){
+                        alert('Maaf stok manggis habis')
+                        kondisibuah=true
+                    }
+                    else
+                    {
+                        stokmanggis-=inputmanggis
+                        alert('Manggis saat ini tersisa : '+stokmanggis)
+                        let kondisibayar=true
+                        while(kondisibayar){
+                        let totalharga = (hargamangga*inputmangga)+(hargaapel*inputapel)+(hargajeruk*inputjeruk)+(hargamanggis*inputmanggis)
+                        alert(totalharga)
+                        let bayar = prompt('Berapa uang yang dibayarkan?')
+                        if (bayar == totalharga){
+                            alert('Uang yang dibayarkan pass')
+                            confirm('Apakah anda ingin membeli lagi?')
+                            kondisibayar=false
+                            
+                        }
+                        else if (bayar > totalharga)
+                        {
+                            let uangkembalian = bayar - totalharga
+                            alert('Uang kembalian sebesar Rp. '+ uangkembalian)
+                            if (confirm("Press a button!")) {
+                            txt = "You pressed OK!";
+                            } else {
+                            kondisibuah=false
+                            } 
+                            kondisibayar = false
+                            
+                          
+                        } else 
+                        {
+                            let kekurangan = totalharga - bayar
+                            alert('Uang yang anda kurang Rp. ' + kekurangan)
+                            kondisibayar = true
+                        }
+                        }
+                        
+                    }
+                }
+                
+            }
+           
+        }
+        
+    }    
+
+         
+
+
+     
+
+    </script>
+</body>
+</html>
