@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<!-- Tugas PR Day_11 -->
+
+
+<body>
+
+    <style>
+        table,
+        tr,
+        td,
+        th {
+            border: 3px solid black;
+            border-collapse: collapse;
+            padding: 1px;
+            text-align: center
+        }
+    </style>
+    <center>
+        <!-- <h1 id= 'tampil'></h1> -->
+        <h2>Daftar Kelas Hamtaro</h2>
+        <table>
+            <thead>
+                <!-- <tr style="font: bold">Kelas Biji Bunga Matahari</tr> -->
+                <tr>
+                    <th onclick="sortTable(0)">Nama</th>
+                    <th>Pekerjaan</th>
+                    <th>Gender</th>
+                    <th onclick="sortTable(2)">Umur</th>
+                    <th>Biodata</th>
+                    <th>Gambar</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+            <tbody id="mainData"></tbody>
+
+            <tfoot>
+                <tr>
+                    <td> <input id="InputNama" type="text" placeholder="Nama orang" required></td>
+                    <td><input id="InputPekerjaan" type="text" placeholder="Pekerjaan" required></td>
+                    <td><input id="inputMale" type="radio" name="gender" value="Male">male
+                        <input id="inputFemale" type="radio" name="gender" value="Female">female</td>
+                    <td><input id="InputUmur" type="number" placeholder="Umur" required></td>
+                    <!-- <td><input id="InputBiodata" type="text" placeholder="Biodata" max="30" required></td> -->
+                    <td><textarea id="InputBiodata" cols="25" rows="3"></textarea> <br>
+                        <span id="now">0</span>
+                        <span>/30</span>
+                    </td>
+                    <td><input id="InputGambar" type="text" placeholder="Input Gambar Link" required></td>
+                    <td><input id="SubmitData" type="Submit" value="Submit" onclick="addData()"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <h3 id="dataKosong"></h3>
+    </center>
+    <center>
+        <table>
+            <h5>Filter</h5>
+            <tr>
+                <td><input id="filterNama" type="text" placeholder="Search by name"></td>
+                <td><input id="filterPekerjaan" type="text" placeholder="Search by job"></td>
+                <td><select id="filterGender" name="" id="">
+                        <option disabled value="Select"> Select option</option>
+                        <option value=""> All</option>
+                        <option value="Female"> Female</option>
+                        <option value="Male"> Male</option>
+                    </select></td>
+                <td><input type="number"  id="filterMinimal" placeholder="Minimal"></td>
+                <td><input type="number" id="filterMaksimal" placeholder="Maksimal"></td>
+                <td><input onclick="searchAndFilter()" type="button" value="cari"></td>
+            </tr>
+        </table>
+    </center>
+
+
+
+</body>
+<script>
+
+    // Class data 
+    class Orang {
+        constructor(nama, pekerjaan, gender, umur, biodata, gambar) {
+            this.nama = nama
+            this.pekerjaan = pekerjaan
+            this.gender = gender
+            this.umur = umur
+            this.biodata = biodata
+            this.gambar = gambar
+        }
+
+    }
+    // Isi data
+    let dataOrang = [
+        new Orang('Rita', 'designer', 'Female', 15, 'In Japan, Hamtaro aired three anime series, released four movies, several specials, many video game/DVD releases and merchandise. By 2002, the franchise had generated $2.5 billion in merchandise sales.[4] The success was not paralleled in the United States, however, with only the first series, some special episodes, three video games (though two others were released in Europe), and limited merchandise. On 23 February 2011, it was announced that Hamtaro would be receiving a series titled Tottoko Hamtaro Dechu', 'https://vignette.wikia.nocookie.net/hamtaro/images/1/1d/HamtaroN.png/revision/latest?cb=20150928215408'),
+        new Orang('Ajeng', 'programmer', 'Male', 21, 'gvcefhbvhbfbv', 'https://i.ya-webdesign.com/images/hamtaro-transparent-10.png'),
+        new Orang('Nugraheni', 'designer', 'Female', 22, 'bhchfvhb', 'https://vignette.wikia.nocookie.net/hamtaro/images/1/1d/HamtaroN.png/revision/latest?cb=20150928215408')
+    ]
+    let isUlang;
+
+    // Menampilkan data 
+    const readerData = (arr = dataOrang) => {
+        let hasil = ''
+        arr.forEach(({ nama, pekerjaan, gender, umur, biodata, gambar }, index) => {
+            let biodataisi
+            if (biodata.length > 30) {
+                biodataisi = biodata.slice(0, 30) + '...'
+            } else {
+                biodataisi = biodata
+            }
+            hasil += `
+            <tr>
+                <td>${nama}</td>
+                <td>${pekerjaan}</td>
+                <td>${gender}</td>
+                <td>${umur}</td>
+                <td>${biodataisi}</td>
+                <td> <img src=${gambar} width= '100px'> </td>
+                <td> <input id ='deleteIndex' type='button' value ='Delete' onclick='deleteData(${index})'> </td>
+        </tr>`
+
+        })
+        document.getElementById('mainData').innerHTML = hasil
+    }
+    readerData(dataOrang)
+
+    // Menambahkan data 
+    const addData = () => {
+
+        let InputNama = document.getElementById("InputNama").value
+        let InputPekerjaan = document.getElementById('InputPekerjaan').value
+        let InputGender = document.getElementsByName('gender')
+        let InputUmur = document.getElementById('InputUmur').value
+        let InputBiodata = document.getElementById('InputBiodata').value
+        if (InputBiodata.length > 30) {
+
+            InputBiodata = InputBiodata.slice(0, 30) + '....'
+
+        }
+        let InputGambar = document.getElementById('InputGambar').value
+        let gender
+
+        for (let i = 0; i < InputGender.length; i++) {
+            if (InputGender[i].checked) {
+                gender = InputGender[i].value
+                InputGender[i].checked = false
+            }
+
+        }
+        // let inputGender
+
+        // if (document.getElementById("inputMale").checked) {
+        //     inputGender = document.getElementById("inputMale").value
+        // } else if (document.getElementById("inputFemale").checked) {
+        //     inputGender = document.getElementById("inputFemale").value
+        // }
+
+        let newData = new Orang(InputNama, InputPekerjaan, gender, InputUmur, InputBiodata, InputGambar)
+
+
+        if (InputNama == false || InputPekerjaan == false || InputUmur == false || InputGambar == false || InputGender == false || InputBiodata == false) {
+            alert('Maaf silahkan ulang masih ada yang kosong')
+
+        } else {
+            dataOrang.push(newData)
+            readerData()
+            alert('Berhasil ditambahkan')
+            document.getElementById("dataKosong").innerHTML = ''
+            InputNama = document.getElementById("InputNama").value = ''
+            InputPekerjaan = document.getElementById('InputPekerjaan').value = ''
+            // document.getElementById('InputGander1').value = ''
+            // document.getElementById('InputGander2').value = ''
+            InputUmur = document.getElementById('InputUmur').value = ''
+            InputBiodata = document.getElementById('InputBiodata').value = ''
+            InputGambar = document.getElementById('InputGambar').value = ''
+            document.getElementById('now').innerHTML = 0
+
+        }
+
+
+    }
+
+
+
+
+    // Delete Data
+    const deleteData = (deleteIndex) => {
+        dataOrang.splice(deleteIndex, 1)
+        readerData()
+        alert('Berhasil Hapus Data')
+        if (dataOrang == '') {
+            alert('Data sudah kosong')
+            document.getElementById('dataKosong').innerHTML = ' <center>Data sudah kosong </center>'
+        } else {
+            document.getElementById('dataKosong').innerHTML = ''
+        }
+    }
+
+    //Sort tabel
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mainData");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 0; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    readerData()
+    document.getElementById('InputBiodata').onkeyup = function () {
+        document.getElementById('now').innerHTML = (InputBiodata.value.length)
+    }
+
+    // function mencari() {
+    //     var input, filter, table, tr, td, i, txtValue;
+    //     input = document.getElementById("myInput");
+    //     filter = input.value.toUpperCase();
+    //     table = document.getElementById("mainData");
+    //     tr = table.getElementsByTagName("tr");
+
+    //     // Mencari berdasar keyword 
+    //     for (i = 0; i < tr.length; i++) {
+    //         td = tr[i].getElementsByTagName("td")[0];
+    //         if (td) {
+    //             txtValue = td.textContent || td.innerText;
+    //             if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //                 tr[i].style.display = "";
+    //             } else {
+    //                 tr[i].style.display = "none";
+    //             }
+    //         }
+    //     }
+    // }
+    const searchAndFilter = () => {
+        let hasil = []
+        let filterNama = document.getElementById("filterNama").value
+        let filterPekerjaan = document.getElementById("filterPekerjaan").value
+        let filterGander = document.getElementById("filterGender").value
+        let filterMaksimal = document.getElementById('filterMaksimal').value
+        let filterMinimal = document.getElementById('filterMinimal').value
+
+        if (!filterMaksimal){
+            filterMaksimal = 999
+        }
+
+        dataOrang.forEach((val) => {
+            let { nama, gender, pekerjaan, umur} = val
+            console.log(umur >= filterMinimal, umur <= filterMaksimal, umur)
+            console.log(gender.toLowerCase().startsWith(filterGander.toLowerCase()), gender)
+            console.log(pekerjaan.toLowerCase().startsWith(filterPekerjaan.toLowerCase()), pekerjaan)
+            console.log(nama.toLowerCase().startsWith(filterNama.toLowerCase()), nama)
+
+            if (nama.toLowerCase().startsWith(filterNama.toLowerCase()) &&
+                pekerjaan.toLowerCase().startsWith(filterPekerjaan.toLowerCase()) &&
+                gender.toLowerCase().startsWith(filterGander.toLowerCase()) && 
+                umur >= filterMinimal && umur <= filterMaksimal 
+                //|| umur >= filterMinimal 
+            ) {
+                hasil.push(val)
+            }
+        })
+        readerData(hasil)
+       
+    }
+
+</script>
+
+</html>
