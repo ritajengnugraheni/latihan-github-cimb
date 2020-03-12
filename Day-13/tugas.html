@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <style>
+    
+
         fieldset {
             /* margin-top: 20px; */
             margin-left: 230px;
             margin-right: 230px;
-            
-            
+
+
         }
 
         table,
@@ -51,10 +54,11 @@
             padding: 8px 10px;
             cursor: pointer;
         }
-        .tombolInput:hover{
-            border: 2px solid black
-            
+
+        .tombolInput:hover {
+            background-color: darkgreen
         }
+
         .tombolDelete {
             background-color: red;
             color: white;
@@ -65,11 +69,13 @@
             padding: 5px 6px;
             cursor: pointer;
         }
-        .tombolDelete:hover{
-            border: 2px solid black
+
+        .tombolDelete:hover {
+            background-color: darkred
         }
-        .tombolEdit{
-            background-color: blue; 
+
+        .tombolEdit {
+            background-color: blue;
             color: white;
             border: none;
             border-radius: 2px;
@@ -78,11 +84,13 @@
             padding: 5px 16px;
             cursor: pointer;
         }
-        .tombolEdit:hover{
-            border: 2px solid black
+
+        .tombolEdit:hover {
+            background-color: darkblue
         }
+
         .tombolBuy {
-            background-color: darkslategray; 
+            background-color: darkslategray;
             color: white;
             border: none;
             border-radius: 2px;
@@ -91,11 +99,13 @@
             padding: 5px 16px;
             cursor: pointer;
         }
-        .tombolBuy:hover{
-            border: 2px solid black
+
+        .tombolBuy:hover {
+            background-color: black
         }
-        .tombolKurangTambah{
-            background-color: darkslategray; 
+
+        .tombolKurangTambah {
+            background-color: darkslategray;
             color: white;
             border: none;
             border-radius: 2px;
@@ -104,12 +114,19 @@
             padding: 5px 16px;
             cursor: pointer;
         }
-        .tombolKurangTambah:hover{
-            border: 2px solid black
+
+        .tombolKurangTambah:hover {
+            background-color: black
         }
     </style>
+    <marquee style="color:white; font-size: 30px" behavior="alternate" direction="left" bgcolor="green">
+        <<<<< Selamat Datang Silahkan Berbelanja>>>>>> <<<<< Selamat Datang Silahkan Berbelanja>>>>>
+    </marquee>
     <center>
-        <h1>Toko Pembelian</h1>
+        <h1
+            style="color:lightseagreen; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font: bold">
+            <span style='font-size:50px;'>&#127794;</span> &nbsp; Cendana Mart &nbsp;<span
+                style='font-size:50px;'>&#127794;</span></h1>
     </center>
     <div>
         <!-- untuk filter==================================== -->
@@ -204,11 +221,11 @@
         <!-- untuk daftar pembelian========================================= -->
         <fieldset>
             <legend><strong>Daftar Pembelian</strong></legend>
-           <center> <h3>***Daftar Pembelian***</h3> </center> 
+            <center>
+                <h3>***Daftar Pembelian***</h3>
+            </center>
         </fieldset>
     </div>
-
-
 </body>
 <script>
     // // class pada data 
@@ -233,7 +250,7 @@
 
     const renderData = (arr = produkData) => {
         let hasil = ''
-        arr.forEach(({ id, nama, harga, kategori, stok }, index) => {
+        arr.forEach(({ id, nama, harga, kategori, stok}, index) => {
 
             hasil += `
             <tr>
@@ -247,7 +264,6 @@
                     <input  class="tombolEdit" id ='' type='button' value ='Edit'> 
                 </td>
         </tr>`
-
         })
         document.getElementById('mainData').innerHTML = hasil
     }
@@ -294,9 +310,9 @@
                 filterMaksHarga = 99999999
             }
 
-            console.log(nama.toLowerCase().startsWith(filterNama.toLowerCase()), nama)
-            console.log(kategori.toLowerCase().startsWith(filterKategori.toLowerCase()), kategori)
-            console.log(harga <= filterMaksHarga, harga);
+            // console.log(nama.toLowerCase().startsWith(filterNama.toLowerCase()), nama)
+            // console.log(kategori.toLowerCase().startsWith(filterKategori.toLowerCase()), kategori)
+            // console.log(harga <= filterMaksHarga, harga);
             if (nama.toLowerCase().startsWith(filterNama.toLowerCase()) &&
                 kategori.toLowerCase().startsWith(filterKategori.toLowerCase()) &&
                 harga >= filterMinHarga && harga <= filterMaksHarga
@@ -323,6 +339,7 @@
             } else {
                 arrCart[idx].qty++
             }
+            
 
         } else {
             let newCartItem = {
@@ -350,7 +367,7 @@
           <td>${harga}</td>
           <td>${qty}</td>
           <td> 
-            <input  class="tombolKurangTambah" id ='' type='button' onclick='tambahCart(${index})' value ='(+)'>
+            <input  class="tombolKurangTambah" id ='' type='button' onclick='tambahCart(${id})' value ='(+)'>
             <input class="tombolKurangTambah" id ='' type='button' onclick='kurangCart(${index})' value ='(-)'>
             <input class="tombolDelete" id ='' type='button' onclick='deleteCart(${id})' value ='Delete'> 
           </td>
@@ -397,18 +414,31 @@
         renderCart()
     }
 
-    // const tambahCart =(indexTambah)=>{
-    //     arrCart[indexTambah].qty +=1
+    const tambahCart = (id) => {
+        // alert('masuk')
+        let item = produkData.find((val) => val.id == id)
+        // alert(item.nama)
+        let isInCart = arrCart.find((val) => val.id == item.id)
+        // console.log(isInCart)
+        if (isInCart) {
+            let idx = arrCart.findIndex((val) => val.id == isInCart.id)
+            if (arrCart[idx].qty >= arrCart[idx].stok) {
+                alert('Sudah habis stoknya')
+            } else {
+                arrCart[idx].qty++
+            }
 
-    //     if (arrCart[indexTambah].qty >= arrCart[indexTambah].stok){
-    //         alert('Stok sudah habis')
+        } else {
+            let newCartItem = {
+                ...item,
+                qty: 1
+            }
 
-    //     } 
-    //     // else{
-    //     //     arrCart[indexTambah].qty++
-    //     // }
-    //     renderCart()
-    // }
+            arrCart.push(newCartItem)
+        }
+
+        renderCart()
+    }
 
 </script>
 
