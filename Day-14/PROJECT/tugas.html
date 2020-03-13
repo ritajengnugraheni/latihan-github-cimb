@@ -18,9 +18,6 @@
             margin-right: 230px;
             /* margin: auto; */
             font-size: 12px
-
-
-
         }
 
         .coba {
@@ -126,6 +123,7 @@
         .tombolKurangTambah:hover {
             background-color: black
         }
+
         .kiri {
             float: left;
         }
@@ -241,15 +239,15 @@
                 <p>==============================================</p>
             </center>
             <div>
-            <div class="kiri"> 
-                <p id="informasiBayar"></p>
-               
+                <div class="kiri">
+                    <p id="informasiBayar"></p>
+
+                </div>
+                <div class="kanan" style="font-size: 12px">
+                    <p id="totalPPN"></p>
+                    <h6 id="totalHarga"></h6>
+                </div>
             </div>
-            <div class="kanan" style="font-size: 12px">
-                <p id="totalPPN"></p>
-                <h6 id="totalHarga"></h6>
-            </div>
-        </div>
         </fieldset>
     </div>
 </body>
@@ -371,12 +369,12 @@
         // alert('masuk')
         let item = produkData.find((val) => val.id == id)
         // alert(item.nama)
-        let produkIndex = produkData.findIndex((val)=> val.id==item.id)
+        let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
         // console.log(produkData[produkIndex].stok--)
         if (isInCart) {
             let idx = arrCart.findIndex((val) => val.id == isInCart.id)
-            
+
             // console.log(produkData[produkIndex].stok--)
             if (arrCart[idx].qty >= arrCart[idx].stok) {
                 alert('Sudah habis stoknya')
@@ -386,14 +384,14 @@
             }
 
 
-        } else  {
+        } else {
             let newCartItem = {
                 ...item,
                 qty: 1
             }
             produkData[produkIndex].stok--
             arrCart.push(newCartItem)
-        } 
+        }
         // else if (produkData[produkIndex].stok>0){
         //     alert('sudah habis')
         // }
@@ -417,7 +415,7 @@
           <td>${qty}</td>
           <td> 
             <input  class="tombolKurangTambah" id ='' type='button' onclick='tambahCart(${id})' value ='(+)'>
-            <input class="tombolKurangTambah" id ='' type='button' onclick='kurangCart(${index})' value ='(-)'>
+            <input class="tombolKurangTambah" id ='' type='button' onclick='kurangCart(${id})' value ='(-)'>
             <input class="tombolDelete" id ='' type='button' onclick='deleteCart(${id})' value ='Delete'> 
           </td>
         </tr>
@@ -455,24 +453,40 @@
         renderCart()
     }
 
-    const kurangCart = (indexKurang) => {
-        arrCart[indexKurang].qty -= 1
-        if (arrCart[indexKurang].qty == 0) {
-            arrCart.splice(indexKurang, 1)
-        }
-        renderCart()
-    }
+    const kurangCart = (id) => {
 
-    const tambahCart = (id) => {
-                // alert('masuk')
-                let item = produkData.find((val) => val.id == id)
+        let item = produkData.find((val) => val.id == id)
         // alert(item.nama)
-        let produkIndex = produkData.findIndex((val)=> val.id==item.id)
+        let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
         // console.log(produkData[produkIndex].stok--)
         if (isInCart) {
             let idx = arrCart.findIndex((val) => val.id == isInCart.id)
-            
+
+            // console.log(produkData[produkIndex].stok--)
+
+            arrCart[idx].qty -= 1
+            produkData[produkIndex].stok++
+            if (arrCart[idx].qty == 0) {
+                arrCart.splice(idx, 1)
+            }
+
+
+        }
+        renderData()
+        renderCart()
+    }
+
+    const tambahCart = (id) => {
+        // alert('masuk')
+        let item = produkData.find((val) => val.id == id)
+        // alert(item.nama)
+        let produkIndex = produkData.findIndex((val) => val.id == item.id)
+        let isInCart = arrCart.find((val) => val.id == item.id)
+        // console.log(produkData[produkIndex].stok--)
+        if (isInCart) {
+            let idx = arrCart.findIndex((val) => val.id == isInCart.id)
+
             // console.log(produkData[produkIndex].stok--)
             if (arrCart[idx].qty >= arrCart[idx].stok) {
                 alert('Sudah habis stoknya')
@@ -482,14 +496,14 @@
             }
 
 
-        } else  {
+        } else {
             let newCartItem = {
                 ...item,
                 qty: 1
             }
             produkData[produkIndex].stok--
             arrCart.push(newCartItem)
-        } 
+        }
         // else if (produkData[produkIndex].stok>0){
         //     alert('sudah habis')
         // }
@@ -585,9 +599,9 @@
     const sukses = () => {
         arrCart.length = 0
         renderCart()
-        document.getElementById('informasiBayar').innerHTML= ''
+        document.getElementById('informasiBayar').innerHTML = ''
         document.getElementById('totalPPN').innerHTML = ''
-        document.getElementById('totalHarga').innerHTML= ''
+        document.getElementById('totalHarga').innerHTML = ''
     }
     const editProduk = (id) => {
         // alert('masuk')
