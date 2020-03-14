@@ -6,19 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <style>
         fieldset {
             /* margin-top: 20px; */
-            /* margin-left: 230px;
-            margin-right: 230px; */
-            margin: auto;
-
-
-
+            margin-left: 230px;
+            margin-right: 230px;
+            /* margin: auto; */
+            /* text-align:unset */
         }
 
         .coba {
@@ -31,8 +28,9 @@
         th {
             border: 1px solid black;
             border-collapse: collapse;
-            padding: 10px;
-            text-align: center
+            padding: 5px;
+            text-align: center;
+            font-size: 14px
         }
 
         th {
@@ -41,7 +39,6 @@
 
         h1 {
             margin-bottom: 2px;
-
         }
 
         fieldset {
@@ -57,11 +54,6 @@
             text-align: center;
             margin: 5px 2px;
             padding: 8px 10px;
-            cursor: pointer;
-        }
-
-        .tombolInput:hover {
-            background-color: darkgreen
         }
 
         .tombolDelete {
@@ -72,11 +64,7 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 6px;
-            cursor: pointer;
-        }
 
-        .tombolDelete:hover {
-            background-color: darkred
         }
 
         .tombolEdit {
@@ -87,11 +75,7 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 16px;
-            cursor: pointer;
-        }
 
-        .tombolEdit:hover {
-            background-color: darkblue
         }
 
         .tombolBuy {
@@ -102,11 +86,7 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 16px;
-            cursor: pointer;
-        }
 
-        .tombolBuy:hover {
-            background-color: black
         }
 
         .tombolKurangTambah {
@@ -117,19 +97,27 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 16px;
-            cursor: pointer;
         }
 
-        .tombolKurangTambah:hover {
-            background-color: black
+        .kiri {
+            width: 50%;
+            height: 100px;
+            background-color: #FF0;
+            float: left;
+        }
+
+        .kanan {
+            width: 50%;
+            height: 100px;
+            background-color: #0C0;
+            float: right;
         }
     </style>
     <marquee style="color:white; font-size: 30px" behavior="alternate" direction="left" bgcolor="green">
         <<<<< Selamat Datang Silahkan Berbelanja>>>>>> <<<<< Selamat Datang Silahkan Berbelanja>>>>>
     </marquee>
     <center>
-        <h1
-            style="color:lightseagreen; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font: bold">
+        <h1 style="color:lightseagreen;">
             <span style='font-size:50px;'>&#127794;</span> &nbsp; Cendana Mart &nbsp;<span
                 style='font-size:50px;'>&#127794;</span></h1>
     </center>
@@ -229,9 +217,8 @@
             <center>
                 <h3>***Daftar Pembelian***</h3>
             </center>
-            <p id="informasiBayar"></p>
-            <p id="totalPPN"></p>
-            <h3 id="totalHarga"></h3>
+            
+            
 
         </fieldset>
     </div>
@@ -554,9 +541,9 @@
     const sukses = () => {
         arrCart.length = 0
         renderCart()
-        document.getElementById('informasiBayar').innerHTML= ''
+        document.getElementById('informasiBayar').innerHTML = ''
         document.getElementById('totalPPN').innerHTML = ''
-        document.getElementById('totalHarga').innerHTML= ''
+        document.getElementById('totalHarga').innerHTML = ''
     }
     const editProduk = (id) => {
         // alert('masuk')
