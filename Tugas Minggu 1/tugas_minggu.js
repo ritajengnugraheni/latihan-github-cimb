@@ -23,7 +23,7 @@
 //=========== Weekend Task No.2 ===========
 
 // function plusMinus() {
-//     let arrAngka = [1, 2,3]
+//     let arrAngka = [5, 3, 1,6, 9]
 //     let sum = arrAngka[0]
 //     for (let i = 0; i < arrAngka.length; i++) {
 //         if (i == 0) {
@@ -49,3 +49,31 @@
 // }
 // // console.log (isPalindrome("123")) // contoh output false
 // console.log (isPalindrome("anaana")) // contoh output true
+
+// const isPalindrome = (word) =>{
+
+//     return word.toLowerCase().replace(/\s/gi,'').split('').reverse().join('')== word.toLowerCase().replace(/\s/gi,'') 
+// }
+// console.log(isPalindrome(' apa aja '))
+
+// =============Latihan================
+
+
+// const muble=(s)=> {
+// 	let letters = s.toLowerCase().split('')
+//   for(let i = 0; i < letters.length; i++) {
+//     letters[i] = letters[i].toUpperCase() + letters[i].repeat(i)
+//   }
+//   return letters.join('-')
+// }
+// muble('halo')
+// s='apa'
+const ya = (s) => {
+	let letters = s.toLowerCase().split('')
+  for(let i = 0; i < letters.length; i++) {
+    letters[i] = letters[i].toUpperCase() + letters[i].repeat(i)
+  }
+  return letters.join('-')
+}
+
+console.log(ya('hallo'))

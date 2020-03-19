@@ -45,3 +45,27 @@
 // var nama = "Rita Ajeng Nugarheni";
 // var tampil = nama.slice(1,-1);
 // console.log(tampil)
+
+
+
+// const tripleTrouble = (one, two, three) => {
+// let hasil =''
+// for (let i =0 ; i<one.length; i++){
+//   hasil+= one[i]+two[i]+three[i]
+// }
+// return hasil
+
+// }
+// tripleTrouble('ab', 'ab', 'ab')
+
+// let a = 'abc'
+// console.log(a.length)
+
+const tripleTrouble=(one, two, three)=>{
+    let hasil = ''
+    for (let i =0; i<one.length; i++){
+        hasil+= one.split('')[i]+two.split('')[i]+three.split('')[i]
+    }
+    return hasil
+}
+console.log(tripleTrouble('abq', 'abw', 'aby'));

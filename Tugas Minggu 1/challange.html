@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <h1>6174: Kaprekar's Constant</h1>
+<p>Type in any 4 digit number that contains at least 2 different digits (leading zeros are allowed). <strong>Deviating this will cause an infinite loop. You have been warned!</strong>
+  <br>
+  It will be rearranged into descending and ascending order and the smaller number will be subtracted from the larger one.
+  <br>
+  The subtracted difference between the 2 numbers will eventually reach 6174 </p>
+<input type="text" maxlength="4" />
+<button>Go</button>
+<p class="counter">It took <span id="counterSpan"></span> iterations to reach Kaprekar's constant.</p>
+<div class="output"></div>
+</body>
+<script>
+
+//Document ready function
+$(function(){
+
+//Hide the output until the function is run at least once
+  $(".counter").hide();
+  
+//Set global variables so they can be set later
+var diff = "";
+var ascInt = "";
+var descInt = "";
+   
+ //The main function for Kaprekar's constant
+function kC(num) {
+  
+  //Turn integer into array of integers so that it may be sorted
+  var numArray = (""+num).split("");
+  
+  //Sort the array into descending order
+  var descArray = numArray.sort(function(a,b){
+    return b - a;
+  });
+  
+  //Sort the array into ascending order
+  //Slice creates a copy of the array so as to not alter the descending one
+  var ascArray = numArray.slice().sort(function(a,b){
+    return a - b;
+  });
+  
+  //Use join to turn the arrays into strings
+  //Use parse int to turn those strings to integers
+  descInt = parseInt(descArray.join(''));
+  ascInt  = parseInt(ascArray.join(''));
+  
+  //calculate the difference betweent the numbers
+  diff = descInt - ascInt;
+  
+  //Return the difference so that it may be used in function again if necessary
+  return diff;
+}
+ 
+ //Button click sets it all off!
+$("button").on("click", function(){
+  
+  //Remove the output div from the previous calculation
+  $(".output").text("");
+  
+  //The counter variable counts how many times the function runs
+  var counter = 1;
+  
+  //get the integer from the input box
+  var userVal = $("input").val();
+  
+  //Run the function with the user val
+  kC(userVal);
+
+  //Append the calculation that was run to the page to show the progress of the function
+  $(".output").append(descInt + " - " + ascInt + " = " + diff + "<br>");
+
+  //Check that the constant hasn't been reach and continue to run the function
+while (diff !== 6174) {
+  //Run the function again with the number it previously output
+  kC(diff);
+  
+  //Increment the counter
+  counter++;
+  
+  //Append the subsquent calculations that occur during the while loop after the initial call of the function
+  $(".output").append(descInt + " - " + ascInt + " = " + diff + "<br>");
+} 
+  //Show the counter div after the function has run once
+  $(".counter").show();
+  
+  // Insert the final counter number to show how many times the iteration ran
+  $("#counterSpan").text(counter);  
+})  
+ 
+  });
+
+</script>
+</html>
