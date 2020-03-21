@@ -169,18 +169,20 @@
                     <input type="hidden" name="" id="InputId">
                     <td><input type="text" placeholder="Nama" id="InputNama"></td>
                     <td><input type="text" placeholder="Harga" id="InputHarga"></td>
-                    <td><select name="" id="InputKategori">
+                    <td><select name="" id="InputKategori" size="8">
                             <option disabled value="">Select</option>
                             <option value="Pakaian">Pakaian</option>
                             <option value="Buah">Buah</option>
                             <option value="Makanan">Makanan</option>
                             <option value="Elektronik">Elektronik</option>
+                            <!-- <option value="addKategori">Tambah Kategori</option> -->
                         </select></td>
                     <td><input type="text" id="InputStok" placeholder="stok"></td>
                 </tr>
             </table>
             <br>
             <input class="tombolInput" type="button" onclick="addData()" value="Input">
+            <!-- <button class="tombolEdit" type="button" onclick="myFunction()">Insert option</button> -->
         </fieldset>
 
         <!-- untuk tabel data========================== -->
@@ -205,7 +207,6 @@
 
                 </tfoot>
             </table>
-            <p id="dataKosong"></p>
         </fieldset>
 
         <!-- untuk keranjang========================== -->
@@ -243,16 +244,19 @@
             <div>
                 <div class="kiri">
                     <p id="informasiBayar"></p>
-
                 </div>
                 <div class="kanan" style="font-size: 12px">
                     <p id="totalPPN"></p>
                     <h6 id="totalHarga"></h6>
+                    <!-- <p id="detik"></p> -->
+                    <!-- <p id='seconds-counter'> hallo </p> -->
                 </div>
             </div>
         </fieldset>
     </div>
 </body>
+
+
 <script>
     // // class pada data 
     class Produk {
@@ -268,10 +272,13 @@
     // isian data 
     let date = new Date()
     let produkData = [
-        new Produk('1579581080923', 'H&M', 12000, 'Pakaian', 14),
+        new Produk('1579581080923', 'H&M', 120000, 'Pakaian', 14),
         new Produk('1579581081130', 'Jeruk', 6000, 'Buah', 16),
-        new Produk('1579581081290', 'Samsung', 10000, 'Elektronik', 4),
+        new Produk('1579581081290', 'Samsung', 10000000, 'Elektronik', 4),
         new Produk('1579581085672', 'Nasi Goreng', 15000, 'Makanan', 4),
+        new Produk('1579581081396', 'Mangga', 7000, 'Buah', 12),
+        new Produk('1579581081295', 'iPhone', 17000000, 'Elektronik', 5)
+
 
     ]
     let arrCart = []
@@ -310,7 +317,7 @@
         })
         document.getElementById('mainData').innerHTML = hasil
     }
-    // stok -= InputStok
+    
     renderData(produkData)
 
     const addData = () => {
@@ -377,12 +384,8 @@
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
         // console.log(produkData[produkIndex].stok--)
-        // do {
         if (isInCart) {
             let idx = arrCart.findIndex((val) => val.id == isInCart.id)
-
-            // console.log(produkData[produkIndex].stok--)
-
             if (arrCart[idx].qty >= arrCart[idx].stok) {
                 alert('Sudah habis stoknya')
             }
@@ -390,9 +393,6 @@
                 arrCart[idx].qty++
                 produkData[produkIndex].stok--
             }
-
-
-
         } else if (produkData[produkIndex].stok > 0) {
             let newCartItem
             newCartItem = {
@@ -401,13 +401,9 @@
             }
             produkData[produkIndex].stok--
             arrCart.push(newCartItem)
-            // isUlang=true
         } else if (produkData[produkIndex].stok == 0) {
-            alert('Sedah habis')
+            alert('Sudah habis')
         }
-
-        // } while (isUlang)
-
         renderCart()
         renderData()
     }
@@ -426,6 +422,8 @@
           <td>${harga}</td>
           <td><input class="tombolKurangTambah" id ='' type='button' onclick='kurangCart(${id})' value ='(-)'>&nbsp; &nbsp;${qty}&nbsp; &nbsp;<input  class="tombolKurangTambah" id ='' type='button' onclick='tambahCart(${id})' value ='(+)'></td>
           <td> 
+            
+            
             <input class="tombolDelete" id ='' type='button' onclick='deleteCart(${id})' value ='Delete'> 
           </td>
         </tr>
@@ -441,8 +439,6 @@
         produkData.splice(deleteIndex, 1)
         renderData()
         alert('Item berhasil hapus')
-
-        // let item = produkData.find((val) => val.id == id)
         let inCart = arrCart.find((val) => val.id == simpanDelete)
         if (inCart) {
             let index = arrCart.findIndex((val) => val.id == inCart.id)
@@ -457,7 +453,7 @@
         // alert(item.nama)
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
-        // console.log(produkData[produkIndex].stok--)
+        
         if (isInCart) {
             let a = arrCart.findIndex((val) => val.id == isInCart.id)
             // arrCart.splice(a, 1)
@@ -512,7 +508,19 @@
                 arrCart[idx].qty++
                 produkData[produkIndex].stok--
             }
+
+
+        } else {
+            let newCartItem = {
+                ...item,
+                qty: 1
+            }
+            produkData[produkIndex].stok--
+            arrCart.push(newCartItem)
         }
+        // else if (produkData[produkIndex].stok>0){
+        //     alert('sudah habis')
+        // }
 
         renderCart()
         renderData()
@@ -524,6 +532,7 @@
         let hasil2 = ''
         let hasil3 = ''
         let totalHarga2 = ''
+        var seconds = 0;
         arrCart.forEach((val) => {
             let { id, kategori, nama, harga, qty } = val
             let totalHarga = 0
@@ -534,6 +543,13 @@
             totalPPn = totalHarga * 0.1
             let fixHarga = qty * harga
             totalHarga2 = totalPPn + totalHarga
+
+
+            seconds += 1;
+            if (seconds == 10) {
+                alert('Silahkan mengulang transaksi')
+                seconds = 0
+            }
 
             hasil += ` 
             Kategori item &nbsp&nbsp&nbsp&nbsp   : ${kategori}<br>
@@ -547,23 +563,17 @@
       `
             hasil1 = ` Total Harga : ${fixHarga} <br>
             Total PPN   : ${totalPPn} `
-            hasil2 = ` Total Pembayaran : ${totalHarga2} <br> ======= <br> 
+            hasil2 = ` Total Pembayaran : ${totalHarga2}<br> ======= <br> 
             INPUTKAN UANG <br> 
-            <br>
             <input type="number" value="bayar" id="inputBayar" > 
-            <input  class="tombolEdit" onclick='pembayaran()' type='button' value ='Bayar'> `
-
-
-
+            <input  class="tombolEdit" onclick='pembayaran()' type='button' value ='Bayar'> <br>
+            `
+            // hasil3=` <p id='seconds-counter'> </p>`
         })
-
-
         document.getElementById('informasiBayar').innerHTML = hasil
         document.getElementById('totalPPN').innerHTML = hasil1
         document.getElementById('totalHarga').innerHTML = hasil2
-
-
-        // return totalHarga2
+        document.getElementById('detik').innerHTML=hasil3
     }
 
 
@@ -573,6 +583,7 @@
         let hasil2 = ''
         let hasil3 = ''
         let totalHarga2 = ''
+
         arrCart.forEach((val) => {
             let { id, kategori, nama, harga, qty } = val
             let totalHarga = 0
@@ -583,6 +594,7 @@
             totalPPn = totalHarga * 0.1
             let fixHarga = qty * harga
             totalHarga2 = totalPPn + totalHarga
+
 
 
             let inputBayar = document.getElementById('inputBayar').value
@@ -604,9 +616,25 @@
 
 
         })
-
-
     }
+
+//     var seconds = 0;
+// function incrementSeconds() {
+//     seconds += 1;
+//     if (!informasiPayment()){
+//         if (seconds==30){
+//         alert('Silahkan mengulang transaksi')
+//         // seconds=0
+//         sukses()
+        
+//     }
+//     }
+//     document.getElementById('seconds-counter').innerHTML = "You have been here for " + seconds + " seconds.";
+ 
+// }
+// var cancel = setInterval(incrementSeconds, 1000);
+    
+
     const sukses = () => {
         arrCart.length = 0
         renderCart()

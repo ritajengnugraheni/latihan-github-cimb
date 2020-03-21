@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='seconds-counter'> </div>
+</body>
+<script>
+var seconds = 0;
+var el = document.getElementById('seconds-counter');
+
+function incrementSeconds() {
+    seconds += 1;
+    el.innerText = "You have been here for " + seconds + " seconds.";
+    if (seconds==10){
+        alert('Silahkan mengulang transaksi')
+        seconds=0
+    }
+}
+
+var cancel = setInterval(incrementSeconds, 1000);
+</script>
+</html>

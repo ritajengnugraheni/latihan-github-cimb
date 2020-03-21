@@ -151,13 +151,7 @@
             <p>Harga &nbsp; &nbsp; : &nbsp; &nbsp; <input id="filterMinHarga" type="text" onkeyup="searchAndFilter()"> -
                 <input id="filterMaksHarga" type="text" onkeyup="searchAndFilter()"></p>
             <p>Kategori &nbsp;: &nbsp; &nbsp;
-                <select name="" id="filterKategori" onchange="searchAndFilter()">
-                    <option value=""> All </option>
-                    <option value="Pakaian">Pakaian</option>
-                    <option value="Buah">Buah</option>
-                    <option value="Makanan">Makanan</option>
-                    <option value="Elektronik">Elektronik</option>
-                </select>
+                <select name="" id="filterKategori" onchange="searchAndFilter()" placeholder=''></select>
             </p>
         </fieldset>
 
@@ -169,13 +163,9 @@
                     <input type="hidden" name="" id="InputId">
                     <td><input type="text" placeholder="Nama" id="InputNama"></td>
                     <td><input type="text" placeholder="Harga" id="InputHarga"></td>
-                    <td><select name="" id="InputKategori">
-                            <option disabled value="">Select</option>
-                            <option value="Pakaian">Pakaian</option>
-                            <option value="Buah">Buah</option>
-                            <option value="Makanan">Makanan</option>
-                            <option value="Elektronik">Elektronik</option>
-                        </select></td>
+                    <td><input name="" id="InputKategori" list='datalist' placeholder='Kategori'>
+                        <datalist id="datalist"></datalist>
+                    </td>
                     <td><input type="text" id="InputStok" placeholder="stok"></td>
                 </tr>
             </table>
@@ -275,6 +265,44 @@
 
     ]
     let arrCart = []
+    let arrKategori = []
+
+    const addKategori = (category) => {
+        let inKategori
+        let item = produkData.find((val) => val.kategori == category)
+
+        if (item) {
+            inKategori = arrKategori.find((val) => val == item.kategori)
+        } else {
+            arrKategori.push(category)
+        }
+    }
+
+
+    const listKategori = (id) => {
+        let optionKategori = ''
+        if (id == 'filterKategori') {
+            optionKategori += `<option selected value="">All</option>`
+        }
+        if (arrKategori.length > 0) {
+            arrKategori.forEach(item => {
+                optionKategori += `<option value="${item}">${item}</option>`
+            })
+        } else {
+            produkData.forEach(({ kategori }) => {
+                arrKategori.push(kategori)
+            })
+            arrKategori.forEach(item => {
+                optionKategori += `<option value="${item}">${item}</option>`
+            })
+        }
+        document.getElementById(id).innerHTML = optionKategori
+    }
+    listKategori("datalist")
+    listKategori("filterKategori")
+
+
+
 
     const renderData = (arr = produkData, editIndex) => {
         let hasil = ''
@@ -310,31 +338,35 @@
         })
         document.getElementById('mainData').innerHTML = hasil
     }
-    // stok -= InputStok
     renderData(produkData)
 
     const addData = () => {
-
         let InputId = new Date().getTime()
-        let InputNama = document.getElementById('InputNama').value
-        let InputHarga = document.getElementById('InputHarga').value
-        let InputStok = document.getElementById('InputStok').value
-        let InputKategori = document.getElementById('InputKategori').value
+        let InputNama = document.getElementById("InputNama").value
+        let InputHarga = document.getElementById("InputHarga").value
+        let InputStok = document.getElementById("InputStok").value
+        let InputKategori = document.getElementById("InputKategori").value
+
 
         let newData = new Produk(InputId, InputNama, InputHarga, InputKategori, InputStok)
-        if (InputNama == false || InputHarga == false || InputStok == false || InputKategori == false) {
-            alert('Masih ada yang kosong')
-        }
-        else {
-            produkData.push(newData)
-            renderData()
-            alert('Item berhasil ditambahkan')
-            let InputNama = document.getElementById('InputNama').value = ''
-            let InputHarga = document.getElementById('InputHarga').value = ''
-            let InputStok = document.getElementById('InputStok').value = ''
-            let InputKategori = document.getElementById('InputKategori').value = ''
-        }
+        let item = produkData.find((value) => value.kategori.toLowerCase() == InputKategori.toLowerCase())
 
+        if (InputKategori == false || InputNama == false || InputHarga == false || InputStok == false) {
+            alert("Mohon isi dengan lengkap")
+        } else {
+            if (!item) {
+                arrKategori.push(InputKategori)
+            }
+            produkData.push(newData)
+            alert("Data ditambah")
+            renderData()
+            listKategori("datalist")
+            listKategori("filterKategori")
+            inputNama = document.getElementById("InputNama").value = ''
+            inputHarga = document.getElementById("InputHarga").value = ''
+            inputStock = document.getElementById("InputStok").value = ''
+            inputKategori = document.getElementById("InputKategori").value = ''
+        }
     }
 
     const searchAndFilter = () => {
@@ -561,9 +593,6 @@
         document.getElementById('informasiBayar').innerHTML = hasil
         document.getElementById('totalPPN').innerHTML = hasil1
         document.getElementById('totalHarga').innerHTML = hasil2
-
-
-        // return totalHarga2
     }
 
 
