@@ -1,5 +1,4 @@
-// ini loop biasa
-
+// ============== Belajar looping biasa =================
 // for (let i=1; i<20; i++){
 //     if ( i%3 ==0 && i%5==0){
 //         console.log('fizzBuzz')
@@ -13,7 +12,7 @@
 //     }
 // }
 
-// ini break
+// ============== looping menggunakan break ==============
 // FizzBuzzCount =1
 // let len =50
 // for (let i=1; i<=len; i++){
@@ -34,8 +33,7 @@
    
 // }
 
-//loop di dalam loop
-
+// ================= Balajar loop didalam loop =================
 // for (i=0; i<5; i++){ // dijalankan 5 kali 
 //     for(j=0; i<5; j++) // akan dijalankan 25 kali
 // }
@@ -48,16 +46,16 @@
 //     console.log(result)
 // }
 
-// kotak bintang
-let hitung = ''
-for (let i=0; i<5; i++){ //nambah baris
+// ================= Membuat kotak dengan bintang ================
+// let hitung = ''
+// for (let i=0; i<6; i++){ //nambah baris
  
-    for (let j=4; j<5; j++){  // nambah bintang
-        hitung +='*'
-    }
-        // hitung+='\n'   
-}
-console.log(hitung)
+//     for (let j=0; j<6; j++){  // nambah bintang kesamping
+//         hitung +='*'
+//     }
+//         hitung+='\n'   
+// }
+// console.log(hitung)
 
 //==========segitiga kebalik============== blm bener 
 // let hitung = ''
@@ -71,3 +69,47 @@ console.log(hitung)
 //     }
 //         hitung='\n'       
 // }
+// console.log(hitung);
+
+// ============ Membuat segtiga =============
+
+// let hasil = ''
+// for (let i = 0; i < 6; i++) { // i = 1  hasil = '*****\n'
+
+//   for (let j = 0; j < 1; j++) { // j = 4  hasil = '*'
+//     hasil += '*'
+//   }
+
+//   console.log(hasil)
+// }
+
+// console.log(hasil)
+
+// ===================== Membuat bintang piramid ===================
+// function pyramid(n) {
+
+//     for(let i=1; i<= n; i++){
+//       let str2 = '*'. repeat(i*2 -1)
+//       let str = ' '.repeat(n-i);
+  
+      
+//       console.log(str2+str);
+  
+//     }
+  
+//   }
+  
+//   pyramid(5);
+
+var s = '';
+
+for( var i = 10; i > 0; i-- ) {
+ for(var j = 0; j <= i; j++ ) {
+  s += ' ';
+ }
+ for( var k = 10; k >= i; k-- ) {
+  s += '*';
+ }
+ s += '\n';
+}
+console.log(s);

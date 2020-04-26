@@ -46,8 +46,8 @@
                 <tr>
                     <td> <input id="InputNama" type="text" placeholder="Nama orang" required></td>
                     <td><input id="InputPekerjaan" type="text" placeholder="Pekerjaan" required></td>
-                    <td><input type="radio" name="gender" value="male">male
-                        <input type="radio" name="gender" value="female">female</td>
+                    <td><input id="inputMale" type="radio" name="gender" value="Male">male
+                        <input id="inputFemale" type="radio" name="gender" value="Female">female</td>
                     <td><input id="InputUmur" type="number" placeholder="Umur" required></td>
                     <!-- <td><input id="InputBiodata" type="text" placeholder="Biodata" max="30" required></td> -->
                     <td><textarea id="InputBiodata" cols="25" rows="3"></textarea> <br>
@@ -136,13 +136,13 @@
             }
 
         }
-        // let ngitung=''
-        // for (let i=0; i< dataOrang.biodata.length ;i++){
-        //     if (dataOrang.biodata.length>=5){
-        //         ngitung = dataOrang.biodata.slice(0, 5)
-        //     }
-        // }
+        // let inputGender
 
+        // if (document.getElementById("inputMale").checked) {
+        //     inputGender = document.getElementById("inputMale").value
+        // } else if (document.getElementById("inputFemale").checked) {
+        //     inputGender = document.getElementById("inputFemale").value
+        // }
 
         let newData = new Orang(InputNama, InputPekerjaan, gender, InputUmur, InputBiodata, InputGambar)
 

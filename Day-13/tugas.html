@@ -11,8 +11,6 @@
 
 <body>
     <style>
-    
-
         fieldset {
             /* margin-top: 20px; */
             margin-left: 230px;
@@ -37,6 +35,7 @@
 
         h1 {
             margin-bottom: 2px;
+            
         }
 
         fieldset {
@@ -66,7 +65,7 @@
             border-radius: 2px;
             text-align: center;
             margin: 3px 1px;
-            padding: 5px 6px;
+            padding: 3px 6px;
             cursor: pointer;
         }
 
@@ -81,7 +80,7 @@
             border-radius: 2px;
             text-align: center;
             margin: 3px 1px;
-            padding: 5px 16px;
+            padding: 3px 16px;
             cursor: pointer;
         }
 
@@ -96,7 +95,7 @@
             border-radius: 2px;
             text-align: center;
             margin: 3px 1px;
-            padding: 5px 16px;
+            padding: 3px 16px;
             cursor: pointer;
         }
 
@@ -111,7 +110,7 @@
             border-radius: 2px;
             text-align: center;
             margin: 3px 1px;
-            padding: 5px 16px;
+            padding: 3px 16px;
             cursor: pointer;
         }
 
@@ -215,7 +214,7 @@
                 </tfoot>
             </table>
             <br>
-            <input class="tombolInput" type="button" value="Payment">
+            <input class="tombolInput" onclick="informasiPayment()" type="button" value="Payment">
         </fieldset>
 
         <!-- untuk daftar pembelian========================================= -->
@@ -224,6 +223,7 @@
             <center>
                 <h3>***Daftar Pembelian***</h3>
             </center>
+            <p id="informasiBayar"></p>
         </fieldset>
     </div>
 </body>
@@ -250,7 +250,7 @@
 
     const renderData = (arr = produkData) => {
         let hasil = ''
-        arr.forEach(({ id, nama, harga, kategori, stok}, index) => {
+        arr.forEach(({ id, nama, harga, kategori, stok }, index) => {
 
             hasil += `
             <tr>
@@ -339,7 +339,7 @@
             } else {
                 arrCart[idx].qty++
             }
-            
+
 
         } else {
             let newCartItem = {
@@ -439,6 +439,37 @@
 
         renderCart()
     }
+    const informasiPayment = () => {
+        // alert('Sudah masuk')
+        hasil=''
+        arrCart.forEach((val) => {
+            let { id, kategori, nama, harga, qty } = val
+            let fixHarga = qty*harga
+            alert(` 
+            Kategori item : ${kategori}
+            ===========================
+            Id Item : ${id}
+            Nama item : ${nama}
+            Harga item : ${fixHarga}
+            Jumlah item :${qty}
+      `)
+    
+      hasil += `
+            Kategori item &nbsp&nbsp&nbsp&nbsp   : ${kategori}<br>
+            Id Item  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  : ${id} <br>
+            Nama item  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp : ${nama}<br>
+            Total harga item   : ${fixHarga} <br>
+            Jumlah item  &nbsp &nbsp&nbsp&nbsp&nbsp : ${qty}<br>
+
+            ============================<br>
+            
+       
+      `
+        })
+
+            document.getElementById('informasiBayar').innerHTML += hasil + '<h3 style="color=red"><center><strong>Total Harga<strong></center></h5><br>' 
+    }
+    
 
 </script>
 

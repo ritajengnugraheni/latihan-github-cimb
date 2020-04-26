@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    h1 {
+        color: fuchsia
+    }
+
+    .tampilan {
+        text-align: center
+    }
+
+
+
+    .tombol {
+
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        text-align: center;
+        margin: 5px 1px;
+        padding: 2px 12px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .tombol:hover {
+        background-color: darkred
+    }
+    .tampilanLAP{
+        margin-left: 450px
+    }
+</style>
+
+<body>
+    <div class="tampilan">
+        <h1><span style='font-size:30px;'>&#9200;</span>==== STOPWATCH ==== <span style='font-size:30px;'>&#9200;</span>
+        </h1>
+        <center>
+        <table>
+           
+            <tr>
+                <td style="color: crimson; font-size: 45px; " id="stopwatch"><b>0 : 0 : 0</b></td>
+                <td style="color: crimson; font-size: 45px" id="stopwatch1"><b> :  0</b></td>
+            </tr>
+        
+        </table>
+    </center>
+        
+        <!-- <h3 id="stopwatch">0 : 0 : 0 <p id="stopwatch1"> : 0</p> </h3> -->
+        
+        <p><u>Klik button dibawah ini untuk menjalankan stopwatch</u></p>
+
+        <input class="tombol" type="button" value="Stop" onclick="stopTimer()">
+        <input class="tombol" type="button" value="Start" onclick="startTimer()">
+        <input class="tombol" type="button" value="Reset" onclick="resetTimer()">
+        <input class="tombol" type="button" value="LAP" onclick="lapTimer()">
+        <p>***********</p>
+    </div>
+    <div>
+            <p class="tampilanLAP" id="tampilLap"></p>
+    </div>
+        
+
+
+
+
+</body>
+<script>
+
+    let mildetik = 0
+    let detik = 1
+    let menit = 0
+    let jam = 0
+    let varInterval
+    let varInt
+    const startTimer = () => {
+        varInterval = setInterval(() => {
+            document.getElementById('stopwatch').innerHTML = `<b>${jam} : ${menit} : ${detik}</b>`
+          
+            if (detik == 60) {
+                menit += 1
+                detik = 0
+                mildetik = 0
+            } else if (menit == 59) {
+                jam += 1
+                menit = 0
+                detik = 0
+                mildetik = 0
+            }
+
+            detik++
+        }, 1000)
+        miliSecond()
+
+    }
+    const miliSecond = () => {
+        mildetik = 0
+        varInt = setInterval(() => {
+            document.getElementById('stopwatch1').innerHTML = `<b> :  ${mildetik}</b>`
+
+            if (mildetik == 100) {
+                mildetik = 0
+                
+            }
+            mildetik+=1
+        }, 1)
+    }
+
+
+    const stopTimer = () => {
+        if (varInterval) {
+            clearInterval(varInterval)
+            varInterval = null
+        }
+        // clearInterval(varInterval)
+        if (varInt) {
+            clearInterval(varInt)
+            varInt = null
+        }
+
+    }
+    const resetTimer = () => {
+        clearInterval(varInterval)
+        clearInterval(varInt)
+        jam = 0
+        menit = 0
+        detik = 0
+        mildetik = 0
+        document.getElementById('stopwatch').innerHTML = `<b>${jam} : ${menit} : ${detik}</b> `
+        document.getElementById('stopwatch1').innerHTML = `<b> :  ${mildetik} </b>`
+        document.getElementById('tampilLap').innerHTML = ` `
+    }
+
+    const lapTimer = () => {
+         
+        document.getElementById('tampilLap').innerHTML += `LAP.&nbsp &nbsp ${jam} : ${menit} : ${detik} :  ${mildetik} <br> `
+    }
+</script>
+
+</html>

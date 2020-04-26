@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    table,
+    tr,
+    td,
+    th {
+        border: 3px solid black;
+        border-collapse: collapse;
+        padding: 20px;
+        text-align: center
+    }
+</style>
+
+<body>
+    <table id="table">
+        <thead>
+            
+        </thead>
+
+
+        <tbody id="tbody">
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+
+</body>
+<script>
+    function createTable(tableData) {
+        var table = document.createElement('table');
+        var tableBody = document.createElement('tbody');
+
+        tableData.forEach(function (rowData) {
+            var row = document.createElement('tr');
+
+            rowData.forEach(function (cellData) {
+                var cell = document.createElement('td');
+                cell.appendChild(document.createTextNode(cellData));
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+        });
+
+        table.appendChild(tableBody);
+        document.body.appendChild(table);
+    }
+    // let hasil = ''
+    // let hasil =`  `
+    // document.getElementById('button').innerHTML=hasil
+    let arrData =[[1, 2, 5, 6], [1, 2, 5, 6], [1, 2, 5, 6], [1, 2, 5, 6]]
+    createTable(arrData);
+
+    let switchSort = {
+        nama: 0,
+        harga: 0
+
+    }
+
+    const sortData = (key) => {
+        const sortFnAZ = (a, b) => {
+            if (a[key] > b[key]) {
+                return 1
+            } else {
+                return -1
+            }
+            // return a < b ? -1 : 1
+        }
+
+        const sortFnZA = (a, b) => {
+            if (a[key] < b[key]) {
+                return 1
+            } else {
+                return -1
+            }
+            // return a < b ? -1 : 1
+        }
+
+        if (switchSort[key] % 2 === 0) {
+            switchSort[key]++
+            arrData.sort(sortFnAZ)
+        } else {
+            switchSort[key]--
+            arrData.sort(sortFnZA)
+        }
+
+        createTable()
+    }
+
+
+</script>
+
+</html>

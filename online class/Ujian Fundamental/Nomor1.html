@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+<style>
+    h1 {
+        color: brown
+    }
+
+    .tombol {
+        background-color: brown;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        text-align: center;
+        margin: 5px 1px;
+        padding: 2px 12px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .tombol:hover {
+        background-color: black
+    }
+
+    .rata {
+        margin-left: 50px
+    }
+</style>
+
+<body>
+    <div class="rata">
+        <h1> <span style='font-size:30px;'>&#128311;</span>===Drawing Tools===<span
+                style='font-size:30px;'>&#128311;</span></h1>
+        <p> <strong> <u>Keterangan </u> </strong></p>
+        <p>Pilih jenis bangunan sesuai nomor dibawah ini :</p>
+        <ol>
+            1. Persegi <br>
+            2. Segitiga siku-siku rata kiri <br>
+            3. Segitiga siku-siku rata kanan
+        </ol>
+        <p>Jenis bangunan :</p>
+        <input type="number" placeholder="Pilih angka" id="input_pilihan">
+        <p>Ukuran :</p>
+        <input type="number" placeholder="Ingin berapa" id="input_ukuran">
+        <input class="tombol" type="button" value="Lihat hasil" onclick="pilih()">
+        <h2>Layar Hasil</h2>
+        <p style="color: brown" id="hasil"> </p>
+    </div>
+
+
+
+</body>
+<script>
+
+    const pilih = () => {
+        // alert('masuk')
+        let input_pilihan = document.getElementById('input_pilihan').value
+        let input_ukuran = document.getElementById("input_ukuran").value
+        if (input_pilihan == 1) {
+            let hasil_persegi = ''
+            for (let i = 0; i < input_ukuran; i++) {
+                for (let j = 0; j < input_ukuran; j++) {
+                    hasil_persegi += '*'
+                }
+                hasil_persegi += '<br>'
+            }
+
+            document.getElementById('hasil').innerHTML = hasil_persegi
+
+
+        } else if (input_pilihan == 2) {
+            // alert('masuk ' + input_pilihan)
+            let hasil_segitiga = ''
+            for (let i = 1; i <= input_ukuran; i++) {
+                for (let j = 1; j <= i; j++) {
+                    hasil_segitiga += '*'
+                }
+                hasil_segitiga += '<br>'
+                document.getElementById('hasil').innerHTML = hasil_segitiga
+            }
+            
+        } else if (input_pilihan == 3) {
+            // alert('masuk ' + input_pilihan)
+            let hasil_segitiga2 = '';
+
+            for (let i = input_ukuran; i > 0; i--) {
+                for (let j = 0; j <= i; j++) {
+                    hasil_segitiga2 += '&nbsp&nbsp'
+                }
+                for (let k = input_ukuran; k >= i; k--) {
+                    hasil_segitiga2 += '*';
+                }
+                hasil_segitiga2 += '<br>';
+            }
+            document.getElementById('hasil').innerHTML = hasil_segitiga2
+
+        } else {
+            alert("Pilihan anda tidak terdapat pada sistem kami silahkan ulang")
+        }
+        document.getElementById('input_pilihan').value=''
+        document.getElementById("input_ukuran").value=''
+
+    }
+
+</script>
+
+</html>

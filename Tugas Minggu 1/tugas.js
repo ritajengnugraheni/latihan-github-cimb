@@ -25,13 +25,19 @@
 // console.log(arrData.reverse())
 
 //4. ****** Display terbesar dalam array ******
-// var arrData = [2,1,4,3,5,6,7,9,8]
-// var ambil = arrData[0]
-// for (let i =0; i < arrData.length; i++){
-//     if (arrData[i+1] < arrData[i]) {
-//         ambil = arrData[i]
-//     } 
-// } console.log('Nilai tertinggi '+ambil)
+var arrData = [2,1,4,3,5,6,7,9,8]
+var ambil = arrData[0]
+var ambil2= arrData[8]
+for (let i =0; i < arrData.length; i++){
+    if (arrData[i+1] < arrData[i]) {
+        ambil = arrData[i]
+    } 
+    else {
+        ambil2 = arrData[i]
+    }
+} console.log('Nilai tertinggi '+ambil)
+console.log('Nilai terendah' + ambil2);
+
 
 //5. ****** Memfilter array yang isinya integer dan string namun hanya ambil integernya saja ******
 //  var arrData = [2,'Rita', 3,'Ajeng', 'Nugraheni',4 ]
@@ -68,4 +74,4 @@ const tripleTrouble=(one, two, three)=>{
     }
     return hasil
 }
-console.log(tripleTrouble('abq', 'abw', 'aby'));
+// console.log(tripleTrouble('abq', 'abw', 'aby'));

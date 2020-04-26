@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p id="sort"></p>
+    <input type="button" value="sort" onclick="sorting()">
+</body>
+<script>
+    var a = [[1,5,8,7],[1,8,6,9]]
+    let tampung =''
+    const sorting =()=>{
+        // alert('Masuk')
+        for (let i=0; i<a.length ; i++){
+            tampung = a[i].sort(function(a, b){return a - b});
+        }
+        console.log(tampung)
+    }
+    document.getElementById('sort').innerHTML=a
+</script>
+</html>

@@ -426,11 +426,11 @@
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
         // console.log(produkData[produkIndex].stok--)
-        // do {
+        
         if (isInCart) {
             let idx = arrCart.findIndex((val) => val.id == isInCart.id)
 
-            // console.log(produkData[produkIndex].stok--)
+            
 
             if (arrCart[idx].qty >= arrCart[idx].stok) {
                 alert('Sudah habis stoknya')
@@ -450,13 +450,11 @@
             }
             produkData[produkIndex].stok--
             arrCart.push(newCartItem)
-            // isUlang=true
+           
         } else if (produkData[produkIndex].stok == 0) {
             alert('Sedah habis')
         }
-        // seconds=0
-
-        // } while (isUlang)
+        
 
         renderCart()
         renderData()
@@ -507,12 +505,21 @@
         // alert(item.nama)
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
-        
+
+        // let editIndex = produkData.findIndex((val) => {
+        //     if (val.id == id) {
+        //         return true
+        //     }
+        // })
+        // let editStok=document.getElementById('editStok').value
+        // produkData[editIndex].stok = editStok
+      
         if (isInCart) {
             // let a = arrCart.findIndex((val) => val.id == isInCart.id)
             let a = arrCart.findIndex((val) => val.id == isInCart.id)
+            
             if (arrCart[a].qty > 0) {
-                produkData[produkIndex].stok = arrCart[a].qty + produkData[produkIndex].stok
+                produkData[produkIndex].stok = parseInt(arrCart[a].qty + produkData[produkIndex].stok)
                 arrCart.splice(a, 1)
             }
         }
@@ -612,33 +619,29 @@
         hasil3 = `<p id='detik1'></p>`
         seconds = 0
         menit = 0
-
-
         document.getElementById('informasiBayar').innerHTML = hasil
         document.getElementById('totalPPN').innerHTML = hasil1
         document.getElementById('totalHarga').innerHTML = hasil2
         document.getElementById('detik').innerHTML = hasil3
-        // incrementSeconds()
     }
 
-    function incrementSeconds() {
-        seconds += 1;
-       
-        if (menit == 2 && seconds == 59) {
-            alert('Silahkan mengulang transaksi waktu anda sudah melebihi')
-            document.getElementById('informasiBayar').innerHTML = ''
-            document.getElementById('totalPPN').innerHTML = ''
-            document.getElementById('totalHarga').innerHTML = ''
-            document.getElementById('detik').innerHTML = ''
-            seconds = 0
-        }
-        if (seconds == 59) {
-            menit += 1
-            seconds = 0
-        }
-        document.getElementById('detik1').innerHTML = "Waktu berjalan saat ini " + menit + ":" + seconds;
-    }
-    var cancel = setInterval(incrementSeconds, 1000);
+    // function incrementSeconds() {
+    //     seconds += 1;
+    //     document.getElementById('detik1').innerHTML = "Waktu berjalan saat ini " + menit + ":" + seconds;
+    //     if (menit == 2 && seconds == 59) {
+    //         alert('Silahkan mengulang transaksi waktu anda sudah melebihi')
+    //         document.getElementById('informasiBayar').innerHTML = ''
+    //         document.getElementById('totalPPN').innerHTML = ''
+    //         document.getElementById('totalHarga').innerHTML = ''
+    //         document.getElementById('detik').innerHTML = ''
+    //         seconds = 0
+    //     }
+    //     if (seconds == 59) {
+    //         menit += 1
+    //         seconds = 0
+    //     }
+    // }
+    // var cancel = setInterval(incrementSeconds, 1000);
 
     const pembayaran = () => {
         // alert('masuk')
@@ -714,11 +717,12 @@
         let editHarga = document.getElementById('editHarga').value
         let editStok = document.getElementById('editStok').value
 
-        produkData[editIndex].nama = editNama
+        produkData[editIndex].nama= editNama
         produkData[editIndex].harga = editHarga
         produkData[editIndex].stok = editStok
 
         renderData()
+        // renderCart()
     }
 
     // =================== untuk sort ===============  

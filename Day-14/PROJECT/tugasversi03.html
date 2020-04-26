@@ -61,7 +61,8 @@
             border-radius: 3px;
             text-align: center;
             margin: 5px 2px;
-            padding: 8px 10px;
+            font-size: 13px;
+            padding: 5px 12px;
             cursor: pointer;
         }
 
@@ -136,6 +137,7 @@
             text-align: center;
             margin: 5px 1px;
             padding: 2px 12px;
+            font-size: 13px;
             cursor: pointer;
         }
 
@@ -244,15 +246,15 @@
         <fieldset>
             <legend><strong>Daftar Pembelian</strong></legend>
             <center>
-                <h3 style="font: bold">***Daftar Pembelian***</h3>
+                <h3><strong>***Transaksi Pembelian***</strong></h3>
                 <p>==============================================</p>
             </center>
             <div>
-                <div class="kiri">
+                <div class="kiri" style="margin-left: 50px">
                     <p id="informasiBayar"></p>
 
                 </div>
-                <div class="kanan" style="font-size: 12px">
+                <div class="kanan" style="font-size: 12px; margin-right: 50px">
                     <p style="font-size: 14px" id="totalPPN"></p>
                     <p style="font-size: 14px" id="totalHarga"></p>
                     <center>
@@ -261,6 +263,7 @@
                 </div>
             </div>
         </fieldset>
+        
     </div>
 
 
@@ -287,23 +290,11 @@
         new Produk('1579581085672', 'Nasi Goreng', 15000, 'Makanan', 4),
 
     ]
-    let arrCart = []
-    let arrKategori = []
     var seconds = 0;
     var menit = 0;
-
-    // const addKategori = (category) => {
-    //     let inKategori
-    //     let item = produkData.find((val) => val.kategori == category)
-
-    //     if (item) {
-    //         inKategori = arrKategori.find((val) => val == item.kategori)
-    //     } else {
-    //         arrKategori.push(category)
-    //     }
-    // }
-
-    const listKategori = (id) => {
+    let arrCart = []
+    let arrKategori = []
+    const listCategory = (id) => {
         let optionKategori = ''
         if (id == 'filterKategori') {
             optionKategori += `<option selected value="">All</option>`
@@ -323,8 +314,8 @@
         }
         document.getElementById(id).innerHTML = optionKategori
     }
-    listKategori("datalist")
-    listKategori("filterKategori")
+    listCategory("datalist")
+    listCategory("filterKategori")
 
 
 
@@ -385,8 +376,8 @@
             produkData.push(newData)
             alert("Data ditambah")
             renderData()
-            listKategori("datalist")
-            listKategori("filterKategori")
+            listCategory("datalist")
+            listCategory("filterKategori")
             inputNama = document.getElementById("InputNama").value = ''
             inputHarga = document.getElementById("InputHarga").value = ''
             inputStock = document.getElementById("InputStok").value = ''
@@ -594,7 +585,7 @@
             let fixHarga = qty * harga
             totalHarga2 = totalPPn + totalHarga
 
-            hasil += ` 
+            hasil += `
             Kategori item &nbsp&nbsp&nbsp&nbsp   : ${kategori}<br>
             Id Item  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  : ${id} <br>
             Nama item  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp : ${nama}<br>
@@ -604,14 +595,14 @@
             ============================<br>
             
       `
-            hasil1 = ` Total Harga : ${fixHarga} <br>
+            hasil1 = ` Total Harga : ${totalHarga} <br>
             Total PPN   : ${totalPPn} `
-            hasil2 = ` Total Pembayaran : ${totalHarga2} <br> ======= <br> 
+            hasil2 = `<strong> Total Pembayaran : ${totalHarga2}</strong> <br> ======= <br> 
             Peraturan Pembayaran : <br>
             1. Silahkan melakukan pembayaran sebelum 3 menit.<br>
             2. Jika melebihi waktu yang ditentukan transaksi akan <br>
-            digagalkan secara otomatis oleh sistem.<br> <br>
-            INPUTKAN UANG <br> 
+            digagalkan secara otomatis oleh sistem.<br> 
+            <br><strong>INPUTKAN UANG </strong><br> 
             <input class= "bayar" type="number" value="bayar" id="inputBayar" > 
             <input  class="tombolInputBayar"  onclick='pembayaran()' type='button' value ='Bayar'> <br><br>
             <center>*********</center>`
@@ -633,7 +624,7 @@
     function incrementSeconds() {
         seconds += 1;
         document.getElementById('detik1').innerHTML = "Waktu berjalan saat ini " + menit + ":" + seconds;
-        if (menit == 3) {
+        if (menit == 2 && seconds == 59) {
             alert('Silahkan mengulang transaksi waktu anda sudah melebihi')
             document.getElementById('informasiBayar').innerHTML = ''
             document.getElementById('totalPPN').innerHTML = ''
@@ -641,7 +632,7 @@
             document.getElementById('detik').innerHTML = ''
             seconds = 0
         }
-        if (seconds == 60) {
+        if (seconds == 59) {
             menit += 1
             seconds = 0
         }

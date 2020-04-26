@@ -25,7 +25,8 @@
             padding: 10px;
             text-align: center
         }
-        h1{
+
+        h1 {
             margin-bottom: 2px;
         }
     </style>
@@ -36,10 +37,16 @@
         <!-- untuk filter==================================== -->
         <fieldset>
             <legend> <strong> Filter</strong> </legend>
-            <p>Nama : &nbsp; &nbsp; <input type="text"></p>
-            <p>Harga : &nbsp; &nbsp; <input type="text"> - <input type="text"></p>
-            <p>Kategori : &nbsp; &nbsp; <select name="" id="">
+            <p>Nama : &nbsp; &nbsp; <input id="filterNama" type="text" onkeyup="searchAndFilter()"></p>
+            <p>Harga : &nbsp; &nbsp; <input id="filterMinHarga" type="text" onkeyup="searchAndFilter()"> -
+                <input id="filterMaksHarga" type="text" onkeyup="searchAndFilter()"></p>
+            <p>Kategori : &nbsp; &nbsp;
+                <select name="" id="filterKategori" onchange="searchAndFilter()">
                     <option value=""> all </option>
+                    <option value="Pakaian">Pakaian</option>
+                    <option value="Buah">Buah</option>
+                    <option value="Makanan">Makanan</option>
+                    <option value="Elektronik">Elektronik</option>
                 </select>
             </p>
         </fieldset>
@@ -49,16 +56,21 @@
             <legend> <strong> Input Data</strong></legend>
             <table>
                 <tr>
-                    <td><input type="text" placeholder="Nama"></td>
-                    <td><input type="text" placeholder="Harga"></td>
-                    <td><select name="" id="">
-                            <option value="">all</option>
+                    <input type="hidden" name="" id="InputId">
+                    <td><input type="text" placeholder="Nama" id="InputNama"></td>
+                    <td><input type="text" placeholder="Harga" id="InputHarga"></td>
+                    <td><select name="" id="InputKategori">
+                            <option disabled value="">Select</option>
+                            <option value="Pakaian">Pakaian</option>
+                            <option value="Buah">Buah</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Elektronik">Elektronik</option>
                         </select></td>
-                    <td><input type="text" placeholder="stok"></td>
+                    <td><input type="text" id="InputStok" placeholder="stok"></td>
                 </tr>
             </table>
             <br>
-            <input type="button" value="Input">
+            <input type="button" onclick="addData()" value="Input">
         </fieldset>
 
         <!-- untuk tabel data========================== -->
@@ -68,21 +80,22 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Kategori</th>
                         <th>Nama</th>
                         <th>Harga</th>
+                        <th>kategori</th>
                         <th>Stok</th>
                         <th>Beli</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="mainData">
                     <!-- untuk memangghil datanya -->
                 </tbody>
                 <tfoot>
 
                 </tfoot>
             </table>
+            <p id="dataKosong"></p>
         </fieldset>
 
         <!-- untuk keranjang========================== -->
@@ -99,7 +112,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="cartTable">
                     <!-- untuk memangghil datanya -->
                 </tbody>
                 <tfoot>
@@ -119,5 +132,224 @@
 
 
 </body>
+<script>
+    // // class pada data 
+    class Produk {
+        constructor(id, nama, harga, kategori, stok) {
+            this.id = id
+            this.nama = nama
+            this.harga = harga
+            this.kategori = kategori
+            this.stok = stok
+        }
+    }
+
+    // class pakaian extends produk {
+    //     constructor(id, kategori, nama, harga, stok){
+    //         super(id, kategori, nama, harga, stok)
+    //     }
+    // }
+
+    // class buah extends produk {
+    //     constructor(id, kategori, nama, harga, stok){
+    //         super(id, kategori, nama, harga, stok)
+    //     }
+    // }
+
+    // class elektronik extends produk{
+    //     constructor(id, kategori, nama, harga, stok){
+    //         super(id, kategori, nama,harga, stok)
+    //     }
+    // }
+
+    // class makanan extends produk{
+    //     constructor(id, kategori, nama, harga, stok){
+    //         super(id, kategori, nama, harga, stok)
+    //     }
+    // }
+
+    // isian data 
+    let date = new Date()
+    let produkData = [
+        new Produk('1579581080923', 'HM', 12000, 'Pakaian', 10),
+        new Produk('1579581081130', 'Jeruk', 2000, 'Buah', 10),
+        new Produk('1579581081290', 'Samsung', 10000, 'Elektronik', 10)
+    ]
+    let arrCart = []
+
+    const renderData = (arr = produkData) => {
+        let hasil = ''
+        arr.forEach(({ id, nama, harga, kategori, stok }, index) => {
+
+            hasil += `
+            <tr>
+                <td>${id}</td>
+                <td>${nama}</td>
+                <td>${harga}</td>
+                <td>${kategori}</td>
+                <td>${stok}</td>
+                <td> <input id ='' onclick="addToCart(${id})" type='button' value ='Buy'> </td>
+                <td> <input id ='' type='button' value ='Delete' onclick='deleteData(${index})'> 
+                    <input id ='' type='button' value ='Edit'> 
+                </td>
+        </tr>`
+
+        })
+        document.getElementById('mainData').innerHTML = hasil
+    }
+    // stok -= InputStok
+    renderData(produkData)
+
+    const addData = () => {
+
+        let InputId = new Date().getTime()
+        let InputNama = document.getElementById('InputNama').value
+        let InputHarga = document.getElementById('InputHarga').value
+        let InputStok = document.getElementById('InputStok').value
+        let InputKategori = document.getElementById('InputKategori').value
+
+        let newData = new Produk(InputId, InputNama, InputHarga, InputKategori, InputStok)
+        if (InputNama == false || InputHarga == false || InputStok == false || InputKategori == false) {
+            alert('Masih ada yang kosong')
+        }
+        else {
+            produkData.push(newData)
+            renderData()
+            alert('Berhasil ditambahkan')
+            let InputNama = document.getElementById('InputNama').value = ''
+            let InputHarga = document.getElementById('InputHarga').value = ''
+            let InputStok = document.getElementById('InputStok').value = ''
+            let InputKategori = document.getElementById('InputKategori').value = ''
+        }
+
+    }
+
+    const searchAndFilter = () => {
+        let hasil = []
+        let filterNama = document.getElementById("filterNama").value
+        let filterMinHarga = document.getElementById("filterMinHarga").value
+        let filterMaksHarga = document.getElementById("filterMaksHarga").value
+        let filterKategori = document.getElementById("filterKategori").value
+
+
+        produkData.forEach((val) => {
+            let { id, nama, harga, kategori, stok } = val
+
+
+            if (!filterMaksHarga) {
+                filterMaksHarga = 99999999
+            }
+
+            console.log(nama.toLowerCase().startsWith(filterNama.toLowerCase()), nama)
+            console.log(kategori.toLowerCase().startsWith(filterKategori.toLowerCase()), kategori)
+            console.log(harga <= filterMaksHarga, harga);
+            if (nama.toLowerCase().startsWith(filterNama.toLowerCase()) &&
+                kategori.toLowerCase().startsWith(filterKategori.toLowerCase()) &&
+                harga >= filterMinHarga && harga <= filterMaksHarga
+
+            ) {
+                hasil.push(val)
+            }
+        })
+        renderData(hasil)
+
+    }
+
+
+    const addToCart = (id) => {
+        let item = produkData.find((val) => val.id == id) //item isinya produk data
+        // alert(item.nama)
+        let isInCart = arrCart.find((val) => val.id == item.id) // cek dalam cart cari item ada apa engga 
+        // alert(isInCart)
+        if (isInCart) { // jika sudah ada item
+            let idx = arrCart.findIndex((val) => isInCart.id)
+        //     // if (arrCart[idx].qty >= arrCart[idx].stok){
+        //     //     alert('Sudah habis stoknya')
+        //     // } else{
+                arrCart[idx].qty++
+        //     // }
+        } else { // jika belum ada item
+            let newCartItem = {
+                ...item,
+                qty: 1
+            }
+            arrCart.push(newCartItem)
+        }
+
+        renderCart()
+    }
+
+
+    const renderCart = () => {
+        let hasil = ''
+        arrCart.forEach(({ id, kategori, nama, harga, qty }, index) => {
+            // let ({ id, kategori, nama, harga, qty }, index) = val
+            hasil += `
+            <tr>
+                <td>${id}</td>
+                <td>${kategori}</td>
+                <td>${nama}</td>
+                <td>${harga}</td>
+                <td>${qty}</td>
+                <td> 
+                    <input id ='' type='button' onclick='kurangCart(${index})' value ='(-)'>
+                    <input id ='' type='button' onclick='tambahCart(${index})' value ='(+)'>
+                    <input id ='' type='button' onclick='deleteCart(${id})' value ='Delete'> 
+                </td>
+        </tr>`
+
+        })
+        document.getElementById('cartTable').innerHTML = hasil
+    }
+
+
+    const deleteData = (deleteIndex) => {
+        let simpanDelete = produkData[deleteIndex].id
+        produkData.splice(deleteIndex, 1)
+        renderData()
+        alert('Berhasil Hapus Data')
+        
+        // let item = produkData.find((val) => val.id == id)
+        let inCart = arrCart.find((val) => val.id == simpanDelete)
+        if (inCart){
+            let index = arrCart.findIndex((val)=> val.id == inCart.id)
+            arrCart.splice(index, 1)
+        }
+        
+        renderCart()
+    }
+    const deleteCart = (id) => {
+        let item = produkData.find((val) => val.id == id)
+        let inCart = arrCart.find((val) => val.id == item.id)
+
+        if (inCart) {
+            let a = arrCart.findIndex((val) => val.id == inCart.id)
+            arrCart.splice(a, 1)
+        }
+        renderCart()
+    }
+
+    // const kurangCart=(indexKurang)=>{
+    //     arrCart[indexKurang].qty -=1
+    //     if (arrCart[indexKurang].qty == 0){
+    //         arrCart.splice(indexKurang, 1)
+    //     }
+    //     renderCart()
+    // }
+
+    // const tambahCart =(indexTambah)=>{
+    //     arrCart[indexTambah].qty +=1
+        
+    //     if (arrCart[indexTambah].qty >= arrCart[indexTambah].stok){
+    //         alert('Stok sudah habis')
+            
+    //     } 
+    //     // else{
+    //     //     arrCart[indexTambah].qty++
+    //     // }
+    //     renderCart()
+    // }
+
+</script>
 
 </html>

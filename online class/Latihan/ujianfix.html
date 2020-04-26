@@ -169,8 +169,9 @@
             <legend> <strong> Filter</strong> </legend>
             <p>Nama &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; <input id="filterNama" type="text" onkeyup="searchAndFilter()">
             </p>
-            <p>Harga &nbsp; &nbsp; : &nbsp; &nbsp; <input id="filterMinHarga" type="text" onkeyup="searchAndFilter()"> -
-                <input id="filterMaksHarga" type="text" onkeyup="searchAndFilter()"></p>
+            <p>Harga &nbsp; &nbsp; : &nbsp; &nbsp; <input id="filterMinHarga" type="text" onkeyup="searchAndFilter()"
+                    placeholder="Minimal"> -
+                <input id="filterMaksHarga" type="text" onkeyup="searchAndFilter()" placeholder="Maksimal"></p>
             <p>Kategori &nbsp;: &nbsp; &nbsp;
                 <select name="" id="filterKategori" onchange="searchAndFilter()" placeholder=''></select>
             </p>
@@ -187,7 +188,7 @@
                     <td><input name="" id="InputKategori" list='datalist' placeholder='Kategori'>
                         <datalist id="datalist"></datalist>
                     </td>
-                    <td><input type="text" id="InputStok" placeholder="stok"></td>
+                    <td><input type="text" id="InputStok" placeholder="Stok"></td>
                 </tr>
             </table>
             <br>
@@ -253,14 +254,20 @@
             </center>
             <div>
                 <div class="kiri" style="margin-left: 50px">
-                    <p id="informasiBayar"></p>
-                    
+                    <p style="font-size: 13px" id="transaction1"></p>
+
 
                 </div>
                 <div class="kanan" style="font-size: 12px; margin-right: 50px">
-                    <p style="font-size: 14px" id="totalPPN"></p>
-                    <p style="font-size: 14px" id="totalHarga"></p>
-                    <p id="inputKurang"></p>
+                    <p style="font-size: 13px" id="transaction"></p>
+                    <!-- <p style="font-size: 14px" id="totalHarga"></p> -->
+                    <p id="Bayar"></p>
+                    <p id="inputBaru2"></p>
+                    <p id="inputBaru"></p>
+                    
+                    <p id="bintang"></p>
+                   
+
                     <center>
                         <h5 id="timer"></h5>
                     </center>
@@ -294,10 +301,14 @@
         new Produk('1579581085672', 'Nasi Goreng', 15000, 'Makanan', 4),
 
     ]
+
+    // ==================== Variabel Global ================================
     var seconds = 0;
     var menit = 0;
     let arrCart = []
     let arrKategori = []
+
+    // =================== Fungsi List Kategori ===========================
     const listCategory = (id) => {
         let optionKategori = ''
         if (id == 'filterKategori') {
@@ -321,9 +332,7 @@
     listCategory("datalist")
     listCategory("filterKategori")
 
-
-
-
+    //======================= Fungsi Menampilkan Data pada Tabel Data ============================
     const renderData = (arr = produkData, editIndex) => {
         let hasil = ''
         arr.forEach(({ id, nama, harga, kategori, stok }, index) => {
@@ -360,13 +369,13 @@
     }
     renderData(produkData)
 
+    //========================== Fungsi Menambahkan Data pada Tabel Data ============================
     const addData = () => {
         let InputId = new Date().getTime()
         let InputNama = document.getElementById("InputNama").value
         let InputHarga = document.getElementById("InputHarga").value
         let InputStok = document.getElementById("InputStok").value
         let InputKategori = document.getElementById("InputKategori").value
-
 
         let newData = new Produk(InputId, InputNama, InputHarga, InputKategori, InputStok)
         let item = produkData.find((value) => value.kategori.toLowerCase() == InputKategori.toLowerCase())
@@ -390,6 +399,7 @@
 
     }
 
+    //=================== Fungsi Filter ==========================
     const searchAndFilter = () => {
         let hasil = []
         let filterNama = document.getElementById("filterNama").value
@@ -420,21 +430,17 @@
         renderData(hasil)
 
     }
-
-
+    //======================= Fungsi menambahkan item kedalam start ======================
     const addToCart = (id) => {
-        // let isUlang
         // alert('masuk')
         let item = produkData.find((val) => val.id == id)
         // alert(item.nama)
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
         // console.log(produkData[produkIndex].stok--)
-        // do {
+
         if (isInCart) {
             let idx = arrCart.findIndex((val) => val.id == isInCart.id)
-
-            // console.log(produkData[produkIndex].stok--)
 
             if (produkData[produkIndex].stok > 0) {
                 arrCart[idx].qty++
@@ -452,20 +458,15 @@
             }
             produkData[produkIndex].stok--
             arrCart.push(newCartItem)
-            // isUlang=true
+
         } else if (produkData[produkIndex].stok == 0) {
             alert('Stok sudah habis')
         }
-        // seconds=0
-
-        // } while (isUlang)
-
         renderCart()
         renderData(produkData)
     }
 
-
-
+    //==================== Menampilkan data dalam cart ======================
     const renderCart = () => {
         let hasil = ''
         arrCart.forEach((val, index) => {
@@ -487,14 +488,13 @@
         document.getElementById('cartTable').innerHTML = hasil
     }
 
-
+    //================= Delete data dalam tabel data ==========================
     const deleteData = (deleteIndex) => {
         let simpanDelete = produkData[deleteIndex].id
         produkData.splice(deleteIndex, 1)
         renderData()
         alert('Item berhasil hapus')
 
-        // let item = produkData.find((val) => val.id == id)
         let inCart = arrCart.find((val) => val.id == simpanDelete)
         if (inCart) {
             let index = arrCart.findIndex((val) => val.id == inCart.id)
@@ -503,6 +503,8 @@
 
         renderCart()
     }
+
+    // =========================== Delete data pada table cart ===========================
     const deleteCart = (id) => {
         // alert('Masuk')
         let item = produkData.find((val) => val.id == id)
@@ -511,7 +513,6 @@
         let isInCart = arrCart.find((val) => val.id == item.id)
 
         if (isInCart) {
-            // let a = arrCart.findIndex((val) => val.id == isInCart.id)
             let a = arrCart.findIndex((val) => val.id == isInCart.id)
             if (arrCart[a].qty > 0) {
                 produkData[produkIndex].stok = arrCart[a].qty + produkData[produkIndex].stok
@@ -522,17 +523,16 @@
         renderData()
     }
 
+    //========================== Pengurangan stok pada cart =========================
     const kurangCart = (id) => {
 
         let item = produkData.find((val) => val.id == id)
         // alert(item.nama)
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
-        // console.log(produkData[produkIndex].stok--)
+
         if (isInCart) {
             let idx = arrCart.findIndex((val) => val.id == isInCart.id)
-
-            // console.log(produkData[produkIndex].stok--)
 
             arrCart[idx].qty -= 1
             produkData[produkIndex].stok++
@@ -546,179 +546,134 @@
         renderCart()
     }
 
-    // const tambahCart = (id) => {
-    //     // alert('masuk')
-    //     let item = produkData.find((val) => val.id == id)
-    //     // alert(item.nama)
-    //     let produkIndex = produkData.findIndex((val) => val.id == item.id)
-    //     let isInCart = arrCart.find((val) => val.id == item.id)
-    //     // console.log(produkData[produkIndex].stok--)
-    //     if (isInCart) {
-    //         let idx = arrCart.findIndex((val) => val.id == isInCart.id)
-
-    //         // console.log(produkData[produkIndex].stok--)
-    //         if (arrCart[idx].qty >= arrCart[idx].stok) {
-    //             alert('Sudah habis stoknya')
-    //         } else(produkData[produkIndex]>0) {
-    //             arrCart[idx].qty++
-    //             produkData[produkIndex].stok--
-    //         }
-    //     }
-
-    //     renderCart()
-    //     renderData(produkData)
-    // }
+    //================================ Menampilkan informasi transaksi =========================
     const informasiPayment = () => {
         // alert('Sudah masuk')
-        hasil = ''
-        let totalPPn = ''
-        let hasil2 = ''
-        let hasil3 = ''
-        let totalHarga2 = ''
-        arrCart.forEach((val) => {
-            let { id, kategori, nama, harga, qty } = val
-            let totalHarga = 0
-
-            for (let i = 0; i < arrCart.length; i++) {
-                totalHarga += arrCart[i].harga * arrCart[i].qty
-            }
-            totalPPn = totalHarga / 100
-            let fixHarga = qty * harga
-            totalHarga2 = totalPPn + totalHarga
-
-            hasil += `
-            Kategori item &nbsp&nbsp&nbsp&nbsp   : ${kategori}<br>
-            Id Item  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp  &nbsp&nbsp&nbsp&nbsp  : ${id} <br>
-            Nama item  &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp : ${nama}<br>
-            Harga item &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp : ${harga} <br>
-            Jumlah item  &nbsp &nbsp&nbsp&nbsp&nbsp : ${qty}<br>
-            Total harga item   : ${fixHarga} <br>
-            ============================<br>
-            
+        let result = ''
+        let totalCart = ''
+        let subTotal = 0
+        let pajak = 0
+        let totalPrice = 0
+        arrCart.forEach((val, index) => {
+            let { nama, harga, kategori, qty } = val
+            totalCart += `
+        <p>${kategori} | ${nama} | Rp ${harga} x ${qty} = Rp ${harga * qty}<br>==============================</p>
       `
-            hasil1 = ` Total Harga : ${totalHarga} <br>
-            Total PPN   : ${totalPPn} `
-            hasil2 = `<strong> Total Pembayaran : ${totalHarga2}</strong> <br> ======= <br> 
-            Peraturan Pembayaran : <br>
-            1. Waktu untuk melakukkan pembayaran adalah 3 menit.<br>
-            2. Jika melebihi waktu yang ditentukan transaksi akan <br>
-            digagalkan secara otomatis oleh sistem.<br> 
-            <br><strong>INPUTKAN UANG </strong><br> 
-            <input class= "bayar" type="number" value="bayar" id="inputBayar" > 
-            <input  class="tombolInputBayar"  onclick='pembayaran()' type='button' value ='Bayar'> <br><br>
-            <center>*********</center>`
-
-            startTimer()
-
+            subTotal += harga * qty
         })
+        document.getElementById('transaction1').innerHTML = totalCart
+        pajak = subTotal / 100
+        document.getElementById('transaction').innerHTML = `
+      <p>Total harga : Rp. ${subTotal} <br> Total PPN: Rp. ${pajak}</p>
+    `
 
+        document.getElementById('transaction').innerHTML += `<p> <strong> Peraturan pembayaran : </strong> <br> 1. Waktu untuk melakukan pembayaran adalah 30 detik
+        <br> 2. Jika melebihi waktu yang ditentukan transaksi akan <br> digagalkan otomatis oleh sistem. </p>
+      
+    `
+        totalPrice = subTotal + pajak
+        document.getElementById('transaction').innerHTML += `
+      <p><strong>Total Pembayaran: Rp. ${totalPrice}</strong></p>
+    `
+        document.getElementById('transaction').innerHTML += ` 
+        <input class= "bayar"  type="number" id="userPayment">
+     
+    `
+        document.getElementById('bintang').innerHTML = `<p><center>*******<center></p>`
+        document.getElementById('Bayar').innerHTML = ` <input class="tombolInputBayar"  onclick="onUserPay(${totalPrice})" type="button" value="Bayar">`
 
-        document.getElementById('informasiBayar').innerHTML = hasil
-        document.getElementById('totalPPN').innerHTML = hasil1
-        document.getElementById('totalHarga').innerHTML = hasil2
-
-
+        startTimer()
 
     }
 
+    // =============================== Fungsi batas waktu transaksi =========================
     let timer
 
     startTimer = () => {
         let detik = 30
-        // let menit = 3
-        // document.getElementById('timer').innerHTML = `Waktu anda sisa ${menit} menit ${detik} detik`
+
         document.getElementById('timer').innerHTML = `Waktu anda sisa  ${detik} detik`
 
         timer = setInterval(() => {
             detik--
-            // document.getElementById('timer').innerHTML = `Waktu anda sisa ${menit} menit ${detik} detik`
             document.getElementById('timer').innerHTML = `Waktu anda sisa  ${detik} detik`
 
             if (detik == 0) {
                 alert('Waktu pembayaran telah habis')
-                clearInterval(timer)
-                document.getElementById('informasiBayar').innerHTML = ''
-                document.getElementById('totalPPN').innerHTML = ''
-                document.getElementById('totalHarga').innerHTML = ''
+                document.getElementById('transaction').innerHTML = ''
+                document.getElementById('transaction1').innerHTML = ''
                 document.getElementById('timer').innerHTML = ''
-                // menit -= 1
-                detik = 30
+                document.getElementById('bintang').innerHTML = ''
+                document.getElementById('Bayar').innerHTML = ''
+                document.getElementById('inputBaru').innerHTML = ''
+                clearInterval(timer)
 
             }
-            // if (menit == -1) {
-            //     alert('Waktu pembayaran telah habis')
-            //     clearInterval(timer)
-            //     document.getElementById('informasiBayar').innerHTML = ''
-            //     document.getElementById('totalPPN').innerHTML = ''
-            //     document.getElementById('totalHarga').innerHTML = ''
-            //     document.getElementById('timer').innerHTML = ''
-            // }
         }, 1000)
     }
 
+    // ======================= Fungsi untuk pembayaran ============================
+    const onUserPay = (totalPrice) => {
+        
+        let userInput = document.getElementById('userPayment').value
+        if (totalPrice > userInput) {
+            alert(`Uang anda kurang Rp. ${totalPrice - userInput}\n============\nSilahkan melakukan penambahan pembayaran `)
+            // document.getElementById('inputBaru2').innerHTML = `<input class= "bayar"  type="number" value ='${userInput}' disabled>`
+            document.getElementById('inputBaru').innerHTML = ` 
+            Silahkan menginputkan uang tambahan pada kolom dibawah ini <br> 
+            Total kekurangan : <strong> ${totalPrice - userInput} </strong> <br>
+            <input class= "bayar"  type="number" id="userPayment2">
+            <input class="tombolInputBayar"  onclick="onUserPay2(${totalPrice})" type="button" value="Bayar">`
+            document.getElementById('Bayar').innerHTML =''
 
-    const pembayaran = () => {
-        // alert('masuk')
-        let totalPPn = ''
-        let hasil2 = ''
-        let hasil3 = ''
-        let totalHarga2 = ''
-        arrCart.forEach((val) => {
-            let { id, kategori, nama, harga, qty } = val
-            let totalHarga = 0
-
-            for (let i = 0; i < arrCart.length; i++) {
-                totalHarga += arrCart[i].harga * arrCart[i].qty
-            }
-            totalPPn = totalHarga / 100 // ppn jumlahnya 1 persen
-            let fixHarga = qty * harga
-            totalHarga2 = totalPPn + totalHarga
-
-
-            let inputBayar = document.getElementById('inputBayar').value
-            let kembalian = 0
-            let kekurangan = 0
-            let a = ''
-            if (inputBayar == totalHarga2) {
-                alert('Total pembayaran pass')
-                alert('Terima kasih ^^')
-                sukses()
-                // seconds = 0
-            } else if (inputBayar > totalHarga2) {
-                kembalian = inputBayar - totalHarga2
-                alert(`uang kembalian anda\n ======== \n ${kembalian}`)
-                alert('Terima kasih ^^')
-                sukses()
-                // seconds = 0
-            } else {
-                kekurangan = totalHarga2 - inputBayar
-                alert(`Uang anda kurang ${kekurangan}\n========== \nSilahkan melakukan pembayaran ulang`)
-                // nambahin aja ==================
-                a = `Masukan uang kekurangan pembayaran anda pada kolom dibawah ini <br> 
-                <input class= "bayar" type="number" value="bayar kekurangan" id="inputKekurangan" > `
-                // sampai sini ============
-                document.getElementById('inputKurang').innerHTML=a
-            }
-
-
-        })
-
-
+        } else if (totalPrice < userInput) {
+            alert(`Kembalian anda adalah Rp ${userInput - totalPrice}`)
+            alert('Terima kasih telah berbelanja!')
+            sukses()
+        } else if (totalPrice == userInput) {
+            alert('Uang anda pas!')
+            alert('Terima kasih telah berbelanja!')
+            sukses()
+        }
     }
+
+    const onUserPay2 = (totalPrice) => {
+        // alert('Masuk')
+        let userInput = document.getElementById('userPayment').value
+        let userInputTambahan = document.getElementById('userPayment2').value
+        let kekurangan = totalPrice - userInput
+        if (userInputTambahan > kekurangan) {
+            alert(`Uang Anda kembalian ${userInputTambahan - kekurangan}`)
+            alert(`Terima kasih telah berbelanja`)
+            sukses()
+        } else if (userInputTambahan < kekurangan) {
+            alert(`Uang tambahan anda masih kurang silahkan inputkan kembali!`)
+            document.getElementById('userPayment2').value=''
+        } else if (kekurangan == userInputTambahan) {
+            alert('Uang anda pas!')
+            alert('Terima kasih telah berbelanja!')
+            sukses()
+        }
+    }
+  
+
+
+    // =================================== Jika transaksi telah selesai =============================
     const sukses = () => {
         arrCart.length = 0
         renderCart()
-        // deleteData()
-        // renderData()
         clearInterval(timer)
-
-        document.getElementById('informasiBayar').innerHTML = ''
-        document.getElementById('totalPPN').innerHTML = ''
-        document.getElementById('totalHarga').innerHTML = ''
+        document.getElementById('transaction1').innerHTML = ''
+        document.getElementById('transaction').innerHTML = ''
         document.getElementById('timer').innerHTML = ''
+        document.getElementById('bintang').innerHTML = ''
+        document.getElementById('Bayar').innerHTML = ''
+        document.getElementById('inputBaru').innerHTML = ''
 
-        // document.getElementById('detik').innerHTML = ''
+
     }
+
+    //===================== Fungsi melakukan edit data pada tabel data =====================
     const editProduk = (id) => {
         // alert('masuk')
         let editIndex = produkData.findIndex((val) => {
@@ -728,10 +683,13 @@
         })
         renderData(produkData, editIndex)
     }
+
+    //================= Membatalkakn untuk menyimpan hasil edit ========================
     const cancelSave = () => {
         renderData()
     }
 
+    //================ Menyimpan hasil edit ======================================
     const saveSave = (id) => {
         // alert('masuk')
         let editIndex = produkData.findIndex((val) => {

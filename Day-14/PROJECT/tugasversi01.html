@@ -220,7 +220,8 @@
                 </tfoot>
             </table>
             <br>
-            <input class="tombolInput" onclick="informasiPayment()" type="button" value="Payment">
+            <!-- <input class="tombolInput" onclick="informasiPayment()" type="button" value="Payment"> -->
+            <input class="tombolInput" onclick="showTransaction()" type="button" value="Payment">
         </fieldset>
 
         <!-- untuk daftar pembelian========================================= -->
@@ -233,6 +234,9 @@
             <div>
                 <div class="kiri">
                     <p id="informasiBayar"></p>
+                    <!-- hasil pembahasan  -->
+                    <p id="transaksibaru"></p> 
+                    <!-- end to pembahasn -->
 
                 </div>
                 <div class="kanan" style="font-size: 12px">
@@ -595,6 +599,52 @@
         document.getElementById('totalHarga').innerHTML = hasil2
     }
 
+// =============== code dari pembahasan ============ 
+    const showTransaction =()=>{
+        let result=''
+        let totalCard=''
+        let subTotal=0
+        let pajak=0
+        let totalPrice =0
+        arrCart.forEach((val)=>{
+            let {nama, harga, kategori,qty}=val
+          totalCard+=`
+          <p> ${kategori} | ${nama} | ${harga} X ${qty} = Rp. ${harga*qty}
+          `
+          subTotal += harga*qty
+        })
+        document.getElementById('transaksibaru').innerHTML = totalCard
+        document.getElementById('transaksibaru').innerHTML += `
+        <h3> Sub Total : Rp ${subTotal} </h3>`
+        pajak = subTotal/100
+        document.getElementById('transaksibaru').innerHTML += `
+        <h3> Sub Total : Rp ${pajak} </h3>`
+        totalPrice = subTotal+pajak
+        document.getElementById('transaksibaru').innerHTML += `
+        <h3> Sub Total : Rp ${totalPrice} </h3>`
+        document.getElementById('transaksibaru').innerHTML += `
+        <input type ="number" id = "userPayment">
+        <input onclick = "onUserPay(${totalPrice})" type = "button" value = "Pay">`
+    }
+    const onUserPay =(totalPrice)=>{
+        let userInput = document.getElementById("userPayment").value
+        
+        if (totalPrice>userInput){
+            alert('uang kurang'+ (totalPrice-userInput))
+        } else if (totalPrice<userInput){
+            alert('kembalian anda' + (userInput-totalPrice))
+            arrCart.length=0
+            renderCart()
+            document.getElementById('transaksibaru').innerHTML=''
+        } else if (totalPrice=userInput){
+            alert('uang anda pas !')
+            arrCart.length=0
+            renderCart()
+            document.getElementById('transaksibaru').innerHTML=''
+        }
+    }
+
+    // =================== Batas ya =============== 
 
     const pembayaran = () => {
         // alert('masuk')

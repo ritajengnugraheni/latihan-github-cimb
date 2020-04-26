@@ -120,26 +120,32 @@
 
 
 // console.log(dateNow)
-class Items {
-    constructor(nama, harga, stok, qty) {
-        this.nama = nama
-        this.harga = harga
-        this.stok = stok
-        this.qty = qty
-    }
-}
+// class Items {
+//     constructor(nama, harga, stok, qty) {
+//         this.nama = nama
+//         this.harga = harga
+//         this.stok = stok
+//         this.qty = qty
+//     }
+// }
 
-class Buah extends Items {
-    constructor(nama, harga, stok, qty, kadaluarsa) {
-        super(nama, harga, stok, qty)
-        this.kadaluarsa = kadaluarsa
-    }
-}
-let tokoBuah = [
-    new Buah('Jeruk', 1000, 10, 0, '15-3-2020'.split('-')),
-    new Buah('Mangga', 2000, 15, 0, '1-6-2019'.split('-')),
-    new Buah('Apel', 3000, 5, 0, '5-7-2020'.split('-'))
+// class Buah extends Items {
+//     constructor(nama, harga, stok, qty, kadaluarsa) {
+//         super(nama, harga, stok, qty)
+//         this.kadaluarsa = kadaluarsa
+//     }
+// }
+// let tokoBuah = [
+//     new Buah('Jeruk', 1000, 10, 0, '15-3-2020'.split('-')),
+//     new Buah('Mangga', 2000, 15, 0, '1-6-2019'.split('-')),
+//     new Buah('Apel', 3000, 5, 0, '5-7-2020'.split('-'))
 
-]
+// ]
 
-console.log(tokoBuah[1].kadaluarsa[1])
+// console.log(tokoBuah[1].kadaluarsa[1])
+
+let arr = [1,{
+    nama : "ajeng",
+    kelas :"12 ipa 2"
+}]
+console.log(arr[1].nama);

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+   <p id="ini"></p>
+</body>
+<script>
+let a = prompt('inputkan ukuran')
+let hasil = ''
+for (let i = 0; i < a; i++) { // i = 1  hasil = '*****\n'
+
+  for (let j = 0; j < 1; j++) { // j = 4  hasil = '*'
+    hasil += '*'
+  }
+
+  document.getElementById('ini').innerHTML=hasil
+}
+ 
+
+</script>
+
+</html>

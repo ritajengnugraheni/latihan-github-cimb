@@ -63,13 +63,10 @@
             margin: 5px 2px;
             font-size: 13px;
             padding: 5px 12px;
-            cursor: pointer;
+            
         }
 
-        .tombolInput:hover {
-            background-color: darkgreen
-        }
-
+      
         .tombolDelete {
             background-color: red;
             color: white;
@@ -78,13 +75,10 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 6px;
-            cursor: pointer;
+           
         }
 
-        .tombolDelete:hover {
-            background-color: darkred
-        }
-
+      
         .tombolEdit {
             background-color: blue;
             color: white;
@@ -93,12 +87,10 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 16px;
-            cursor: pointer;
+         
         }
 
-        .tombolEdit:hover {
-            background-color: darkblue
-        }
+      
 
         .tombolBuy {
             background-color: darkslategray;
@@ -108,12 +100,10 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 16px;
-            cursor: pointer;
+            
         }
 
-        .tombolBuy:hover {
-            background-color: black
-        }
+      
 
         .tombolKurangTambah {
             background-color: darkslategray;
@@ -123,12 +113,10 @@
             text-align: center;
             margin: 3px 1px;
             padding: 3px 16px;
-            cursor: pointer;
+            
         }
 
-        .tombolKurangTambah:hover {
-            background-color: black
-        }
+      
         .tombolInputBayar {
             background-color: green;
             color: white;
@@ -138,12 +126,10 @@
             margin: 5px 1px;
             padding: 2px 12px;
             font-size: 13px;
-            cursor: pointer;
+           
         }
 
-        .tombolInputBayar:hover {
-            background-color: darkgreen
-        }
+      
         .kiri {
             float: left;
         }
@@ -198,16 +184,16 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>                                                                                                                                     
-                        <th onclick="sortData('nama')">Nama</th>
-                        <th onclick="sortData('harga')">Harga</th>
+                        <th>ID</th>
+                        <th >Nama</th>
+                        <th >Harga</th>
                         <th>kategori</th>
                         <th>Stok</th>
                         <th>Beli</th>
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
-                <tbody id="mainData">                                                                                                           
+                <tbody id="mainData">
                     <!-- untuk memangghil datanya -->
                 </tbody>
                 <tfoot>
@@ -253,17 +239,20 @@
                 <div class="kiri" style="margin-left: 50px">
                     <p id="informasiBayar"></p>
 
+
                 </div>
                 <div class="kanan" style="font-size: 12px; margin-right: 50px">
-                    <p style="font-size: 14px" id="totalPPN"></p>
-                    <p style="font-size: 14px" id="totalHarga"></p>
+                    <p style="font-size: 14px" id="informasiBayar2"></p>
+                    <!-- <p style="font-size: 14px" id="totalHarga"></p> -->
+                    <p id="tombolBayar"></p>
+                    <p id="inputKurang"></p>
                     <center>
-                        <h5 id="detik"></h5>
+                        <h5 id="timer"></h5>
                     </center>
                 </div>
             </div>
         </fieldset>
-        
+
     </div>
 
 
@@ -419,7 +408,7 @@
 
 
     const addToCart = (id) => {
-        let isUlang
+        // let isUlang
         // alert('masuk')
         let item = produkData.find((val) => val.id == id)
         // alert(item.nama)
@@ -432,15 +421,13 @@
 
             // console.log(produkData[produkIndex].stok--)
 
-            if (arrCart[idx].qty >= arrCart[idx].stok) {
-                alert('Sudah habis stoknya')
-            }
-            else {
+            if (produkData[produkIndex].stok > 0) {
                 arrCart[idx].qty++
                 produkData[produkIndex].stok--
             }
-
-
+            else {
+                alert('Stok sudah habis')
+            }
 
         } else if (produkData[produkIndex].stok > 0) {
             let newCartItem
@@ -452,14 +439,14 @@
             arrCart.push(newCartItem)
             // isUlang=true
         } else if (produkData[produkIndex].stok == 0) {
-            alert('Sedah habis')
+            alert('Stok sudah habis')
         }
         // seconds=0
 
         // } while (isUlang)
 
         renderCart()
-        renderData()
+        renderData(produkData)
     }
 
 
@@ -474,7 +461,7 @@
           <td>${kategori}</td>
           <td>${nama}</td>
           <td>${harga}</td>
-          <td><input class="tombolKurangTambah" id ='' type='button' onclick='kurangCart(${id})' value ='(-)'>&nbsp; &nbsp;${qty}&nbsp; &nbsp;<input  class="tombolKurangTambah" id ='' type='button' onclick='tambahCart(${id})' value ='(+)'></td>
+          <td><input class="tombolKurangTambah" id ='' type='button' onclick='kurangCart(${id})' value ='(-)'>&nbsp; &nbsp;${qty}&nbsp; &nbsp;<input  class="tombolKurangTambah" id ='' type='button' onclick='addToCart(${id})' value ='(+)'></td>
           <td> 
             <input class="tombolDelete" id ='' type='button' onclick='deleteCart(${id})' value ='Delete'> 
           </td>
@@ -507,9 +494,8 @@
         // alert(item.nama)
         let produkIndex = produkData.findIndex((val) => val.id == item.id)
         let isInCart = arrCart.find((val) => val.id == item.id)
-        
+
         if (isInCart) {
-            // let a = arrCart.findIndex((val) => val.id == isInCart.id)
             let a = arrCart.findIndex((val) => val.id == isInCart.id)
             if (arrCart[a].qty > 0) {
                 produkData[produkIndex].stok = arrCart[a].qty + produkData[produkIndex].stok
@@ -544,28 +530,28 @@
         renderCart()
     }
 
-    const tambahCart = (id) => {
-        // alert('masuk')
-        let item = produkData.find((val) => val.id == id)
-        // alert(item.nama)
-        let produkIndex = produkData.findIndex((val) => val.id == item.id)
-        let isInCart = arrCart.find((val) => val.id == item.id)
-        // console.log(produkData[produkIndex].stok--)
-        if (isInCart) {
-            let idx = arrCart.findIndex((val) => val.id == isInCart.id)
+    // const tambahCart = (id) => {
+    //     // alert('masuk')
+    //     let item = produkData.find((val) => val.id == id)
+    //     // alert(item.nama)
+    //     let produkIndex = produkData.findIndex((val) => val.id == item.id)
+    //     let isInCart = arrCart.find((val) => val.id == item.id)
+    //     // console.log(produkData[produkIndex].stok--)
+    //     if (isInCart) {
+    //         let idx = arrCart.findIndex((val) => val.id == isInCart.id)
 
-            // console.log(produkData[produkIndex].stok--)
-            if (arrCart[idx].qty >= arrCart[idx].stok) {
-                alert('Sudah habis stoknya')
-            } else {
-                arrCart[idx].qty++
-                produkData[produkIndex].stok--
-            }
-        }
+    //         // console.log(produkData[produkIndex].stok--)
+    //         if (arrCart[idx].qty >= arrCart[idx].stok) {
+    //             alert('Sudah habis stoknya')
+    //         } else(produkData[produkIndex]>0) {
+    //             arrCart[idx].qty++
+    //             produkData[produkIndex].stok--
+    //         }
+    //     }
 
-        renderCart()
-        renderData()
-    }
+    //     renderCart()
+    //     renderData(produkData)
+    // }
     const informasiPayment = () => {
         // alert('Sudah masuk')
         hasil = ''
@@ -580,7 +566,7 @@
             for (let i = 0; i < arrCart.length; i++) {
                 totalHarga += arrCart[i].harga * arrCart[i].qty
             }
-            totalPPn = totalHarga /100
+            totalPPn = totalHarga / 100
             let fixHarga = qty * harga
             totalHarga2 = totalPPn + totalHarga
 
@@ -595,50 +581,64 @@
             
       `
             hasil1 = ` Total Harga : ${totalHarga} <br>
-            Total PPN   : ${totalPPn} `
+            Total PPN   : ${totalPPn} <br> `
             hasil2 = `<strong> Total Pembayaran : ${totalHarga2}</strong> <br> ======= <br> 
-            Peraturan Pembayaran : <br>
-            1. Silahkan melakukan pembayaran sebelum 3 menit.<br>
-            2. Jika melebihi waktu yang ditentukan transaksi akan <br>
-            digagalkan secara otomatis oleh sistem.<br> 
             <br><strong>INPUTKAN UANG </strong><br> 
             <input class= "bayar" type="number" value="bayar" id="inputBayar" > 
-            <input  class="tombolInputBayar"  onclick='pembayaran()' type='button' value ='Bayar'> <br><br>
+            `
+            hasil3 = `<input  class="tombolInputBayar"  onclick='pembayaran()' type='button' value ='Bayar'><br>
             <center>*********</center>`
 
-
+            startTimer()
 
         })
-        hasil3 = `<p id='detik1'></p>`
-        seconds = 0
-        menit = 0
 
 
         document.getElementById('informasiBayar').innerHTML = hasil
-        document.getElementById('totalPPN').innerHTML = hasil1
-        document.getElementById('totalHarga').innerHTML = hasil2
-        document.getElementById('detik').innerHTML = hasil3
-        // incrementSeconds()
+        document.getElementById('informasiBayar2').innerHTML += hasil1
+        document.getElementById('informasiBayar2').innerHTML += hasil2
+        document.getElementById('tombolBayar').innerHTML = hasil3
+
+
+
     }
 
-    function incrementSeconds() {
-        seconds += 1;
-       
-        if (menit == 2 && seconds == 59) {
-            alert('Silahkan mengulang transaksi waktu anda sudah melebihi')
-            document.getElementById('informasiBayar').innerHTML = ''
-            document.getElementById('totalPPN').innerHTML = ''
-            document.getElementById('totalHarga').innerHTML = ''
-            document.getElementById('detik').innerHTML = ''
-            seconds = 0
-        }
-        if (seconds == 59) {
-            menit += 1
-            seconds = 0
-        }
-        document.getElementById('detik1').innerHTML = "Waktu berjalan saat ini " + menit + ":" + seconds;
+    let timer
+
+    startTimer = () => {
+        let detik = 30
+        // let menit = 3
+        // document.getElementById('timer').innerHTML = `Waktu anda sisa ${menit} menit ${detik} detik`
+        document.getElementById('timer').innerHTML = `Waktu anda sisa  ${detik} detik`
+
+        timer = setInterval(() => {
+            detik--
+            // document.getElementById('timer').innerHTML = `Waktu anda sisa ${menit} menit ${detik} detik`
+            document.getElementById('timer').innerHTML = `Waktu anda sisa  ${detik} detik`
+
+            if (detik == 0) {
+                alert('Waktu pembayaran telah habis')
+                clearInterval(timer)
+                document.getElementById('informasiBayar').innerHTML = ''
+                document.getElementById('informasiBayar2').innerHTML = ''
+                document.getElementById('timer').innerHTML = ''
+                document.getElementById('inputKurang').innerHTML = ''
+                document.getElementById('tombolBayar').innerHTML = ''
+                // menit -= 1
+                detik = 30
+
+            }
+            // if (menit == -1) {
+            //     alert('Waktu pembayaran telah habis')
+            //     clearInterval(timer)
+            //     document.getElementById('informasiBayar').innerHTML = ''
+            //     document.getElementById('totalPPN').innerHTML = ''
+            //     document.getElementById('totalHarga').innerHTML = ''
+            //     document.getElementById('timer').innerHTML = ''
+            // }
+        }, 1000)
     }
-    var cancel = setInterval(incrementSeconds, 1000);
+
 
     const pembayaran = () => {
         // alert('masuk')
@@ -653,7 +653,7 @@
             for (let i = 0; i < arrCart.length; i++) {
                 totalHarga += arrCart[i].harga * arrCart[i].qty
             }
-            totalPPn = totalHarga /100 // ppn jumlahnya 1 persen
+            totalPPn = totalHarga / 100 // ppn jumlahnya 1 persen
             let fixHarga = qty * harga
             totalHarga2 = totalPPn + totalHarga
 
@@ -661,34 +661,89 @@
             let inputBayar = document.getElementById('inputBayar').value
             let kembalian = 0
             let kekurangan = 0
+            let a = ''
             if (inputBayar == totalHarga2) {
                 alert('Total pembayaran pass')
                 alert('Terima kasih ^^')
                 sukses()
-                seconds = 0
+                // seconds = 0
             } else if (inputBayar > totalHarga2) {
                 kembalian = inputBayar - totalHarga2
                 alert(`uang kembalian anda\n ======== \n ${kembalian}`)
                 alert('Terima kasih ^^')
                 sukses()
-                seconds = 0
+                // seconds = 0
             } else {
                 kekurangan = totalHarga2 - inputBayar
                 alert(`Uang anda kurang ${kekurangan}\n========== \nSilahkan melakukan pembayaran ulang`)
+                // nambahin aja ==================
+                a = `Masukan uang kekurangan pembayaran anda pada kolom dibawah ini <br> 
+                <input class= "bayar" type="number" value="bayar kekurangan" id="inputKekurangan" >
+                <input  class="tombolInputBayar"  onclick='bayarKurang()' type='button' value ='Bayar'><br>
+                <center>*********</center> `
+                // sampai sini ============
+                document.getElementById('inputKurang').innerHTML = a
+                document.getElementById('tombolBayar').innerHTML = ''
+
             }
 
 
         })
-
-
     }
+
+    const bayarKurang = () => {
+        // alert('masuk')
+        let totalPPn = ''
+        let totalHarga2 = ''
+        arrCart.forEach((val) => {
+            let { id, kategori, nama, harga, qty } = val
+            let totalHarga = 0
+
+            for (let i = 0; i < arrCart.length; i++) {
+                totalHarga += arrCart[i].harga * arrCart[i].qty
+            }
+            totalPPn = totalHarga / 100 // ppn jumlahnya 1 persen
+            let fixHarga = qty * harga
+            totalHarga2 = totalPPn + totalHarga
+
+
+            let inputBayar = document.getElementById('inputBayar').value
+            let kembalian = 0
+            let kekurangan = 0
+            let total_dibayarkan = 0
+            kekurangan = totalHarga2 - inputBayar
+            let inputKekurangan = document.getElementById('inputKekurangan').value
+            if (inputKekurangan == kekurangan) {
+                alert('Uang anda pas')
+                sukses()
+            } else if (inputKekurangan > kekurangan) {
+                total_dibayarkan = inputKekurangan - kekurangan
+                alert(`Uang anda kembalian ${total_dibayarkan}`)
+                sukses()
+            } else {
+                alert('uang anda masih kurang silahkan inputkan kekurangan kembali')
+                document.getElementById('inputKekurangan').value = ''
+            }
+        })
+    }
+
+
+
     const sukses = () => {
         arrCart.length = 0
         renderCart()
+        // deleteData()
+        // renderData()
+        clearInterval(timer)
+
         document.getElementById('informasiBayar').innerHTML = ''
-        document.getElementById('totalPPN').innerHTML = ''
-        document.getElementById('totalHarga').innerHTML = ''
-        document.getElementById('detik').innerHTML = ''
+        document.getElementById('informasiBayar').innerHTML = ''
+        document.getElementById('informasiBayar2').innerHTML = ''
+        document.getElementById('timer').innerHTML = ''
+        document.getElementById('tombolBayar').innerHTML = ''
+        document.getElementById('inputKurang').innerHTML = ''
+
+        // document.getElementById('detik').innerHTML = ''
     }
     const editProduk = (id) => {
         // alert('masuk')
@@ -716,48 +771,12 @@
 
         produkData[editIndex].nama = editNama
         produkData[editIndex].harga = editHarga
-        produkData[editIndex].stok = editStok
+        produkData[editIndex].stok = parseInt(editStok)
 
         renderData()
     }
 
-    // =================== untuk sort ===============  
-    let switchSort = {
-      nama: 0,
-      harga: 0
-      
-    }
-
-    const sortData = (key) => {
-      const sortFnAZ = (a, b) => {
-        if (a[key] > b[key]) {
-          return 1
-        } else {
-          return -1
-        }
-        // return a < b ? -1 : 1
-      }
-
-      const sortFnZA = (a, b) => {
-        if (a[key] < b[key]) {
-          return 1
-        } else {
-          return -1
-        }
-        // return a < b ? -1 : 1
-      }
-
-      if (switchSort[key] % 2 === 0) {
-        switchSort[key]++
-        produkData.sort(sortFnAZ)
-      } else {
-        switchSort[key]--
-        produkData.sort(sortFnZA)
-      }
-
-      renderData()
-    }
-
+   
 
 </script>
 
