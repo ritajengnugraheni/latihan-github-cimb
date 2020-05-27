@@ -13,9 +13,9 @@
 //                 output += i
 //                 result.push((output.split('')))
 //             }
-            
+
 //         }
-        
+
 //     }
 //     for (let a = 0; a < result.length; a++){
 //         for (let b =0; b< result[a].length; b++){
@@ -24,10 +24,10 @@
 //     }
 //     for (let c=0; c<result.length; c++){
 //         resultFix.push(result[c])
-        
+
 //     }
 //     console.log(resultFix); 
- 
+
 // }
 
 // generatePyramid(6)
@@ -46,7 +46,7 @@
 //       result.push(hasil)
 //     }
 //     console.log(result);
-     
+
 //   }
 //  ganjil(5)
 
@@ -105,3 +105,18 @@
 //   };
 
 // pascal(6)
+
+// let hari = new Date().getDate()
+
+// console.log(new Date().getDate());
+let arrbulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+
+let hari = new Date().getDate()
+let bulan = new Date().getMonth()
+let tahun = new Date().getFullYear()
+
+let tanggal = hari + '-' + arrbulan[bulan] + "-" + tahun
+console.log(tanggal);
+
+
+
